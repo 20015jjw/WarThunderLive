@@ -7,9 +7,12 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by Will on 9/1/15.
@@ -20,15 +23,17 @@ public class RequestMaker {
 
     private OkHttpClient CLIENT = new OkHttpClient();
 
-    public String makeRequest() throws IOException {
+    public InputStream makeRequest() throws IOException, JSONException {
 
         Request request = new Request.Builder()
-                .url(baseURL)
+                .url(unLogged)
                 .build();
 
         Response response = CLIENT.newCall(request).execute();
         Log.v("Request", response.body().string());
-        response.body().byteStream();
+        Log.v("Request", response.body().string());
+
+        return response.body().byteStream();
     }
 
 }
