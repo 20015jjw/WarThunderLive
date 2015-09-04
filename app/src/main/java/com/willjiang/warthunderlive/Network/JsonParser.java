@@ -1,6 +1,9 @@
 package com.willjiang.warthunderlive.Network;
 
+import android.content.Context;
 import android.util.JsonReader;
+
+import com.willjiang.warthunderlive.R;
 
 import org.json.JSONObject;
 
@@ -16,6 +19,12 @@ import java.util.List;
  */
 
 public class JsonParser {
+
+    Context mContext;
+
+    public JsonParser (Context context) {
+        this.mContext = context;
+    }
 
     public List readJsonStream(InputStream in) throws IOException {
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
@@ -41,14 +50,14 @@ public class JsonParser {
         HashMap post = new HashMap();
         reader.beginObject();
 
-        post.put("description", "");
-        post.put("images", new ArrayList());
+        post.put(API.description, "");
+        post.put(API.images, new ArrayList());
 
         while (reader.hasNext()) {
             String key = reader.nextName();
-            if (key.equals("description")) {
+            if (key.equals(API.description)) {
                 post.put(key, reader.nextString());
-            } else if (key.equals("images")) {
+            } else if (key.equals(API.images)) {
                 post.put(key, readImages(reader));
             } else {
                 reader.skipValue();
@@ -66,7 +75,7 @@ public class JsonParser {
             reader.beginObject();
             while (reader.hasNext()) {
                 String key = reader.nextName();
-                if (key.equals("src")) {
+                if (key.equals(API.image_src)) {
                     images.add(reader.nextString());
                 } else {
                     reader.skipValue();

@@ -38,7 +38,7 @@ public class RequestMaker extends AsyncTask<String, Void, String> {
 
     private OkHttpClient CLIENT = new OkHttpClient();
 
-    public InputStream makeRequest() throws IOException, JSONException {
+    public InputStream makeRequest() throws IOException {
 
         Request request = new Request.Builder()
                 .url(unLogged)
@@ -58,12 +58,10 @@ public class RequestMaker extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... params) {
         Log.v("req", "started");
         try {
-            JsonParser parser = new JsonParser();
+            JsonParser parser = new JsonParser(this.mContext);
             response = parser.readJsonStream(makeRequest());
             Log.v("req", "finished");
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
             e.printStackTrace();
         }
         return null;
