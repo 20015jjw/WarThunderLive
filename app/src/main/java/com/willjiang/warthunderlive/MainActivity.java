@@ -4,6 +4,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.willjiang.warthunderlive.Network.RequestMaker;
+import com.willjiang.warthunderlive.Network.JsonParser;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,6 +20,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.main, new PostsFragement())
+                    .commit();
+        }
+
     }
 
     @Override
@@ -29,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            RequestMaker requestMaker = new RequestMaker(this, findViewById(R.id.posts_fragment));
+            requestMaker.execute();
         }
 
         return super.onOptionsItemSelected(item);

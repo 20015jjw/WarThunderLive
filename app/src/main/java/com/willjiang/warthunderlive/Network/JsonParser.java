@@ -1,6 +1,8 @@
-package com.willjiang.warthunderlive;
+package com.willjiang.warthunderlive.Network;
 
 import android.util.JsonReader;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +49,9 @@ public class JsonParser {
             if (key.equals("description")) {
                 post.put(key, reader.nextString());
             } else if (key.equals("images")) {
-                post.put(key, readImage(reader));
+                post.put(key, readImages(reader));
+            } else {
+                reader.skipValue();
             }
         }
 
@@ -55,14 +59,24 @@ public class JsonParser {
         return post;
     }
 
-    public List readImage(JsonReader reader) throws IOException {
+    public List readImages(JsonReader reader) throws IOException {
         List images = new ArrayList();
         reader.beginArray();
         while (reader.hasNext()) {
-            images.add(reader.nextString());
+            reader.beginObject();
+            while (reader.hasNext()) {
+                String key = reader.nextName();
+                if (key.equals("src")) {
+                    images.add(reader.nextString());
+                } else {
+                    reader.skipValue();
+                }
+            }
+            reader.endObject();
         }
         reader.endArray();
         return images;
     }
+
 
 }
