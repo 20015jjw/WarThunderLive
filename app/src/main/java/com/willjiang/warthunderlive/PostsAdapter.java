@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import it.gmariotti.cardslib.library.cards.material.MaterialLargeImageCard;
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.view.CardView;
+import it.gmariotti.cardslib.library.view.CardViewNative;
+
 /**
  * Created by Will on 9/3/15.
  */
@@ -29,20 +34,6 @@ public class PostsAdapter extends ArrayAdapter {
         // this.posts = posts;
     }
 
-//    public void addAll(List posts) {
-//        Log.v("addAll", "started");
-//        this.posts = posts;
-//        notifyDataSetChanged();
-//    }
-//
-//    public void clear () {
-//        this.posts.clear();
-//        notifyDataSetChanged();
-//    }
-//
-//    public HashMap getItem(int position) {
-//        return (HashMap) posts.get(position);
-//    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -53,14 +44,17 @@ public class PostsAdapter extends ArrayAdapter {
                     inflate(R.layout.fragment_post, parent, false);
         }
 
-        TextView tvDescription = (TextView) convertView.findViewById(R.id.list_item_description);
         String rawText = (String) post.get("description");
-        tvDescription.setText(Html.fromHtml(rawText));
 
-        ImageView tvThunbnail = (ImageView) convertView.findViewById(R.id.list_item_image);
-        String imageURL = (String) ((ArrayList) post.get("images")).get(0);
-        Ion.with(tvThunbnail)
-                .load(imageURL);
+
+        // TextView tvDescription = (TextView) convertView.findViewById(R.id.post_description);
+        // String rawText = (String) post.get("description");
+        // tvDescription.setText(Html.fromHtml(rawText));
+
+        // ImageView tvThunbnail = (ImageView) convertView.findViewById(R.id.post_image);
+        // String imageURL = (String) ((ArrayList) post.get("images")).get(0);
+        // Ion.with(tvThunbnail)
+        //         .load(imageURL);
 
         return convertView;
     }

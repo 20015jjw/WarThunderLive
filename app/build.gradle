@@ -27,9 +27,10 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.1.1'
-    compile 'com.ogaclejapan.smarttablayout:library:1.3.0'
+    // compile 'com.ogaclejapan.smarttablayout:library:1.3.0'
     // compile 'com.ogaclejapan.smarttablayout:utils-v4:1.3.0@aar'
     // compile 'com.ogaclejapan.smarttablayout:utils-v13:1.3.0@aar'
+    compile 'com.github.gabrielemariotti.cards:cardslib-cards:2.1.0'
     compile 'com.github.gabrielemariotti.cards:cardslib-core:2.1.0'
     compile 'com.github.gabrielemariotti.cards:cardslib-extra-staggeredgrid:2.1.0'
 }

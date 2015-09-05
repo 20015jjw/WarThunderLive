@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.main, new PostsFragement())
                     .commit();
         }
-
     }
 
     @Override
