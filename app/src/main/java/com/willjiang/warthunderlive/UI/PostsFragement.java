@@ -1,17 +1,17 @@
-package com.willjiang.warthunderlive;
+package com.willjiang.warthunderlive.UI;
 
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.willjiang.warthunderlive.PostsAdapter;
+import com.willjiang.warthunderlive.R;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Will on 9/3/15.

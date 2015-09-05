@@ -2,19 +2,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_marginTop="2dp"
-        android:id="@+id/colorBorder"
-        android:layout_width="10dp"
-        android:layout_height="@dimen/card_base_empty_height"/>
-
     <!-- Use same ID to use built-in features -->
     <TextView
-        android:layout_toRightOf="@id/colorBorder"
-        android:id="@+id/card_main_inner_simple_title"
+        android:id="@+id/title"
         android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="test"/>
 
+    <ImageView
+        android:id="@+id/img"
+        android:layout_marginTop="2dp"
+        android:layout_width="10dp"
+        android:layout_height="@dimen/card_base_empty_height"/>
 </RelativeLayout>

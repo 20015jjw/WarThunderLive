@@ -12,6 +12,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.koushikdutta.ion.Ion;
+import com.willjiang.warthunderlive.UI.PostCard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,10 +46,8 @@ public class PostsAdapter extends ArrayAdapter {
                     inflate(R.layout.fragment_post, parent, false);
         }
 
-        Card card = new Card(getContext());
-        CardHeader header = new CardHeader(getContext());
-        header.setTitle("test");
-        card.addCardHeader(header);
+        Card card = new PostCard(getContext());
+        card.setTitle("WT666");
 
         ((CardViewNative) convertView).setCard(card);
 

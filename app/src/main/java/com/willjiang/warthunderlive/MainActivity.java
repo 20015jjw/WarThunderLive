@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.willjiang.warthunderlive.Network.RequestMaker;
-import com.willjiang.warthunderlive.Network.JsonParser;
+import com.willjiang.warthunderlive.UI.PostsFragement;
 
 import org.json.JSONException;
 
