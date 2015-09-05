@@ -19,6 +19,7 @@ import java.util.List;
 
 import it.gmariotti.cardslib.library.cards.material.MaterialLargeImageCard;
 import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.view.CardView;
 import it.gmariotti.cardslib.library.view.CardViewNative;
 
@@ -43,6 +44,13 @@ public class PostsAdapter extends ArrayAdapter {
             convertView = LayoutInflater.from(getContext()).
                     inflate(R.layout.fragment_post, parent, false);
         }
+
+        Card card = new Card(getContext());
+        CardHeader header = new CardHeader(getContext());
+        header.setTitle("test");
+        card.addCardHeader(header);
+
+        ((CardViewNative) convertView).setCard(card);
 
         String rawText = (String) post.get("description");
 
