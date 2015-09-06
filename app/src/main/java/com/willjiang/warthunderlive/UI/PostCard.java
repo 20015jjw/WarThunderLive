@@ -54,14 +54,22 @@ public class PostCard extends Card {
         LinearLayout authorInfo = (LinearLayout) author.findViewById(R.id.post_author_header_info);
         TextView authorNickname = (TextView) authorInfo.findViewById(R.id.post_author_header_info_nickname);
         TextView TimeStamp = (TextView) authorInfo.findViewById(R.id.post_author_header_info_timestamp);
-        // ImageView authorAvatar = (ImageView) author.findViewById(R.id.post_author_header_avatar);
+        ImageView authorAvatar = (ImageView) author.findViewById(R.id.post_author_header_avatar);
 
+        // header
+        // author name
         authorNickname.setText(this.mAuthor.get(API.author_nickname));
+        // timestamp
         TimeStamp.setText(mTimestamp);
+        // author avatar
+        ((IonCardThumbnail) getCardThumbnail()).setThumbnailURL(this.mAuthor.get(API.author_avatar));
+        getCardThumbnail().setupInnerViewElements(parent, authorAvatar);
 
+        // description
         TextView description = (TextView) parent.findViewById(R.id.post_description);
         description.setText(mDescription);
 
+        // thumbnail
         ImageView thumbnail = (ImageView) parent.findViewById(R.id.post_thumbnail);
         ((IonCardThumbnail) getCardThumbnail()).setThumbnailURL(mThumbnailURL);
         getCardThumbnail().setupInnerViewElements(parent, thumbnail);
