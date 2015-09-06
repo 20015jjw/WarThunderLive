@@ -59,6 +59,10 @@ public class JsonParser {
                 post.put(key, reader.nextString());
             } else if (key.equals(API.images)) {
                 post.put(key, readImages(reader));
+            } else if (key.equals(API.author)) {
+                post.put(key, readAuthor(reader));
+            } else if (key.equals(API.timestamp)) {
+                post.put(key, reader.nextString());
             } else {
                 reader.skipValue();
             }
@@ -66,6 +70,27 @@ public class JsonParser {
 
         reader.endObject();
         return post;
+    }
+
+    public HashMap<String, String> readAuthor(JsonReader reader) throws IOException {
+        HashMap author = new HashMap<String, String>();
+        reader.beginObject();
+        while (reader.hasNext()) {
+            while (reader.hasNext()) {
+                String key = reader.nextName();
+                if (key.equals(API.author_avatar)) {
+                    author.put(key, reader.nextString());
+                } else if (key.equals(API.author_nickname)){
+                    author.put(key, reader.nextString());
+                } else if (key.equals(API.author_id)) {
+                    author.put(key, reader.nextString());
+                } else {
+                    reader.skipValue();
+                }
+            }
+        }
+        reader.endObject();
+        return author;
     }
 
     public List readImages(JsonReader reader) throws IOException {

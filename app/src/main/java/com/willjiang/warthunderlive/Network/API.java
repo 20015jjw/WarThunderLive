@@ -12,6 +12,7 @@ public class API {
     public static final String is_liked = "isLiked";
     public static final String description = "description";
     public static final String images = "images";
+    public static final String timestamp = "created";
 
     public static final String author_id = "id";
     public static final String author_nickname = "nickname";

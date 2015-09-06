@@ -2,6 +2,7 @@ package com.willjiang.warthunderlive;
 
 import android.content.Context;
 import android.text.Html;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,14 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.koushikdutta.ion.Ion;
+import com.willjiang.warthunderlive.Network.API;
 import com.willjiang.warthunderlive.UI.PostCard;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import it.gmariotti.cardslib.library.cards.material.MaterialLargeImageCard;
 import it.gmariotti.cardslib.library.internal.Card;
@@ -46,24 +50,39 @@ public class PostsAdapter extends ArrayAdapter {
                     inflate(R.layout.fragment_post, parent, false);
         }
 
-        Card card = new PostCard(getContext());
-        card.setTitle("WT666");
+        PostCard card = new PostCard(getContext());
+
+        // description
+        String rawText = (String) post.get(API.description);
+        card.setDescription(Html.fromHtml(rawText).toString());
+
+        // thumbnail
+        String imageURL = (String) ((ArrayList) post.get(API.images)).get(0);
+        card.setThumbnailURL(imageURL);
+
+        // author
+        HashMap<String, String> author = (HashMap<String, String>) post.get(API.author);
+        card.setAuthor(author);
+
+        // timestamp
+        String rawTimestamp = (String) post.get(API.timestamp);
+        String timestamp = getDate(Long.valueOf(rawTimestamp) * 1000);
+        card.setTimestamp(timestamp);
 
         ((CardViewNative) convertView).setCard(card);
-
-        String rawText = (String) post.get("description");
-
-
-        // TextView tvDescription = (TextView) convertView.findViewById(R.id.post_description);
-        // String rawText = (String) post.get("description");
-        // tvDescription.setText(Html.fromHtml(rawText));
-
-        // ImageView tvThunbnail = (ImageView) convertView.findViewById(R.id.post_image);
-        // String imageURL = (String) ((ArrayList) post.get("images")).get(0);
-        // Ion.with(tvThunbnail)
-        //         .load(imageURL);
-
         return convertView;
+    }
+
+    private String getDate(long time) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time);
+        String date = DateFormat.format("LLLL dd, yyyy HH:mm", cal).toString();
+
+        if (date.substring(6, 10).equals("2015")) {
+            date = date.substring(0, 5) + date.substring(10);
+        }
+
+        return date;
     }
 
 }
