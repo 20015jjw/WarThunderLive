@@ -8,10 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.etsy.android.grid.StaggeredGridView;
 import com.willjiang.warthunderlive.PostsAdapter;
 import com.willjiang.warthunderlive.R;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+
+import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
 
 /**
  * Created by Will on 9/3/15.
@@ -28,7 +32,7 @@ public class PostsFragement extends Fragment {
         posts = new ArrayList();
 
         mPostsAdapter = new PostsAdapter(getActivity(), posts);
-        ListView postsList = (ListView) rootView.findViewById(R.id.posts_list);
+        StaggeredGridView postsList = (StaggeredGridView) rootView.findViewById(R.id.posts_list);
         postsList.setAdapter(mPostsAdapter);
         return rootView;
     }

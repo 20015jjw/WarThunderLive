@@ -9,8 +9,12 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.etsy.android.grid.StaggeredGridView;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import com.willjiang.warthunderlive.PostsAdapter;
 import com.willjiang.warthunderlive.R;
@@ -33,15 +37,21 @@ public class RequestMaker extends AsyncTask<String, Void, String> {
     private View rootView;
     private List response;
 
-    private final static String baseURL = "http://live.warthunder.com/api/feed";
-    private final static String unLogged = baseURL + "/get_unlogged";
-
     private OkHttpClient CLIENT = new OkHttpClient();
 
     public InputStream makeRequest() throws IOException {
 
+        RequestBody postBody = new FormEncodingBuilder()
+                .add("page", "0")
+                .add("content", "0")
+                .add("sort", "1")
+                .add("user", "0")
+                .add("period", "30")
+                .build();
+
         Request request = new Request.Builder()
-                .url(unLogged)
+                .url(API.unLogged)
+                .post(postBody)
                 .build();
 
         Response response = CLIENT.newCall(request).execute();
@@ -70,7 +80,7 @@ public class RequestMaker extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         Log.v("update", "started");
-        ListView listView = (ListView) rootView.findViewById(R.id.posts_list);
+        StaggeredGridView listView = (StaggeredGridView) rootView.findViewById(R.id.posts_list);
         ((PostsAdapter) listView.getAdapter()).addAll(response);
     }
 

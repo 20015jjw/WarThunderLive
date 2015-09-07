@@ -4,15 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.willjiang.warthunderlive.Network.RequestMaker;
 import com.willjiang.warthunderlive.UI.PostsFragement;
-
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 

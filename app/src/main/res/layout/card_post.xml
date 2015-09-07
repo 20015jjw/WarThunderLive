@@ -12,8 +12,9 @@
 
         <ImageView
         android:id="@+id/post_author_header_avatar"
-        android:layout_width="150px"
-        android:layout_height="150px"
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:layout_marginRight="20px" />
@@ -22,7 +23,7 @@
             android:id="@+id/post_author_header_info"
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="4"
             android:orientation="vertical">
 
             <TextView

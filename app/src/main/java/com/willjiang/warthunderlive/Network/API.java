@@ -4,6 +4,11 @@ package com.willjiang.warthunderlive.Network;
  * Created by will on 9/4/15.
  */
 public class API {
+    public static final String baseURL = "http://live.warthunder.com/api";
+    public static final String unLogged = baseURL + "/feed/get_unlogged/";
+
+
+
     public static final String author = "author";
     public static final String type = "type";
     public static final String comments = "comments";
