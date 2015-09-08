@@ -1,4 +1,4 @@
-package com.willjiang.warthunderlive;
+package com.willjiang.warthunderlive.UI;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

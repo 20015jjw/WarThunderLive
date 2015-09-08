@@ -1,12 +1,15 @@
 package com.willjiang.warthunderlive;
 
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.willjiang.warthunderlive.Network.RequestMaker;
-import com.willjiang.warthunderlive.UI.PostsFragement;
+import com.willjiang.warthunderlive.UI.PostsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,11 +17,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.main, new PostsFragement())
-                    .commit();
-        }
+//        if (savedInstanceState == null) {
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.main, new PostsFragment())
+//                    .commit();
+//        }
+        final ViewPager postsPager = (ViewPager) findViewById(R.id.posts_pager);
+        PostsPagerAdapter postsPagerAdapter = new PostsPagerAdapter(this.findViewById(R.id.main),
+                getSupportFragmentManager());
+        postsPager.setAdapter(postsPagerAdapter);
+        postsPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.v("page_select", "" + position);
+                PostsPagerAdapter adapter = (PostsPagerAdapter) postsPager.getAdapter();
+                PostsFragment currentPosts = (PostsFragment) adapter.getRegisteredFragment(position);
+                currentPosts.onExecute();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -37,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            RequestMaker requestMaker = new RequestMaker(this, findViewById(R.id.posts_fragment));
-            requestMaker.execute();
         }
 
         return super.onOptionsItemSelected(item);

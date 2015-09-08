@@ -37,9 +37,7 @@ public class PostsAdapter extends ArrayAdapter {
 
     public PostsAdapter(Context context, List posts) {
         super(context, 0, posts);
-        // this.posts = posts;
     }
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -58,8 +56,11 @@ public class PostsAdapter extends ArrayAdapter {
         card.setDescription(Html.fromHtml(rawText).toString());
 
         // thumbnail
-        String imageURL = (String) ((ArrayList) post.get(API.images)).get(0);
-        card.setThumbnailURL(imageURL);
+        ArrayList images = (ArrayList) post.get(API.images);
+        if (!images.isEmpty()) {
+            String imageURL = (String) (images).get(0);
+            card.setThumbnailURL(imageURL);
+        }
 
         // author
         HashMap<String, String> author = (HashMap<String, String>) post.get(API.author);

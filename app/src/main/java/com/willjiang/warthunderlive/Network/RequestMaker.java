@@ -3,6 +3,7 @@ package com.willjiang.warthunderlive.Network;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
@@ -17,6 +18,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import com.willjiang.warthunderlive.PostsAdapter;
+import com.willjiang.warthunderlive.PostsPagerAdapter;
 import com.willjiang.warthunderlive.R;
 
 import org.json.JSONArray;
@@ -32,18 +34,32 @@ import javax.xml.transform.Result;
 /**
  * Created by Will on 9/1/15.
  */
-public class RequestMaker extends AsyncTask<String, Void, String> {
+public class RequestMaker extends AsyncTask<Bundle , Void, String> {
     private Context mContext;
     private View rootView;
     private List response;
+    private Bundle args;
 
     private OkHttpClient CLIENT = new OkHttpClient();
 
+    public RequestMaker () {
+        super();
+    }
+
+    public RequestMaker(View rootView, Bundle args) {
+        super();
+        this.rootView = rootView;
+        this.args = args;
+    }
+
     public InputStream makeRequest() throws IOException {
+
+        String content = String.valueOf(args.getInt("index"));
+        Log.v("request", "content " + content);
 
         RequestBody postBody = new FormEncodingBuilder()
                 .add("page", "0")
-                .add("content", "0")
+                .add("content", content)
                 .add("sort", "1")
                 .add("user", "0")
                 .add("period", "30")
@@ -59,13 +75,11 @@ public class RequestMaker extends AsyncTask<String, Void, String> {
         return response.body().byteStream();
     }
 
-    public RequestMaker(Context context, View rootView) {
-        this.mContext = context;
-        this.rootView = rootView;
-    }
-
     @Override
-    protected String doInBackground(String... params) {
+    protected String doInBackground(Bundle... params) {
+        Bundle args = params[0];
+        this.args = args;
+
         Log.v("req", "started");
         try {
             JsonParser parser = new JsonParser(this.mContext);
