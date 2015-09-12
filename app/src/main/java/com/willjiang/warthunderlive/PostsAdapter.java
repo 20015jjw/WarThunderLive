@@ -44,7 +44,6 @@ public class PostsAdapter extends ArrayAdapter {
         HashMap post = (HashMap) getItem(position);
 
         if (convertView == null) {
-            Log.v("adapter", "creating new views");
             convertView = LayoutInflater.from(getContext()).
                     inflate(R.layout.fragment_post, parent, false);
         }
@@ -83,8 +82,9 @@ public class PostsAdapter extends ArrayAdapter {
         if (date.substring(6, 10).equals("2015")) {
             date = date.substring(0, 5) + date.substring(10);
         }
-
         return date;
     }
+
+
 
 }

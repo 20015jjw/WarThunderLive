@@ -24,16 +24,14 @@ public class PostsFragment extends Fragment {
 
     private ArrayAdapter mPostsAdapter;
     private ArrayList posts;
-    private RequestMaker mRequestMaker;
     private View rootView;
 
-    public static PostsFragment newInstance(RequestMaker requestMaker, int page, String catalog) {
+    public static PostsFragment newInstance(int page, String catalog) {
         PostsFragment postsFragment = new PostsFragment();
         Bundle args = new Bundle();
         args.putInt("index", page);
         args.putString("catalog", catalog);
         postsFragment.setArguments(args);
-        postsFragment.mRequestMaker = requestMaker;
         return postsFragment;
     }
 
@@ -50,12 +48,9 @@ public class PostsFragment extends Fragment {
         StaggeredGridView postsList = (StaggeredGridView) rootView.findViewById(R.id.posts_list);
         postsList.setAdapter(mPostsAdapter);
 
-        return rootView;
-    }
-
-    public void onExecute() {
         RequestMaker requestMaker = new RequestMaker(rootView, getArguments());
-        requestMaker.execute(getArguments());
+        requestMaker.execute(this.getArguments());
+        return rootView;
     }
 
 }

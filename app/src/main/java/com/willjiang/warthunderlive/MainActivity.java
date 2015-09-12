@@ -1,5 +1,7 @@
 package com.willjiang.warthunderlive;
 
+import android.app.ActionBar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,34 +19,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.main, new PostsFragment())
-//                    .commit();
-//        }
         final ViewPager postsPager = (ViewPager) findViewById(R.id.posts_pager);
         PostsPagerAdapter postsPagerAdapter = new PostsPagerAdapter(this.findViewById(R.id.main),
-                getSupportFragmentManager());
+                getSupportFragmentManager(), this);
         postsPager.setAdapter(postsPagerAdapter);
-        postsPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        TabLayout PostsHeader = (TabLayout) findViewById(R.id.posts_pager_header);
+        PostsHeader.setupWithViewPager(postsPager);
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                Log.v("page_select", "" + position);
-                PostsPagerAdapter adapter = (PostsPagerAdapter) postsPager.getAdapter();
-                PostsFragment currentPosts = (PostsFragment) adapter.getRegisteredFragment(position);
-                currentPosts.onExecute();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     @Override

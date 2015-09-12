@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string-array name="tab_headers">
+        <item>All</item>
+        <item>Images</item>
+        <item>Videos</item>
+        <item>Quotes</item>
+        <item>Camouflages</item>
+        <item>Missions</item>
+        <item>Locations</item>
+        <item>Models</item>
+    </string-array>
+</resources>

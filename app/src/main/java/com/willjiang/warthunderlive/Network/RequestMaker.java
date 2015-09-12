@@ -96,6 +96,7 @@ public class RequestMaker extends AsyncTask<Bundle , Void, String> {
         Log.v("update", "started");
         StaggeredGridView listView = (StaggeredGridView) rootView.findViewById(R.id.posts_list);
         ((PostsAdapter) listView.getAdapter()).addAll(response);
+        ((PostsAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
 }
