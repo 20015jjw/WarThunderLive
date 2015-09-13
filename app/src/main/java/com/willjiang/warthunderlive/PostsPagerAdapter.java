@@ -37,7 +37,7 @@ public class PostsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 8;
     }
 
     @Override
@@ -47,9 +47,19 @@ public class PostsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return PostsFragment.newInstance(0, "All");
             case 1:
-                return PostsFragment.newInstance(1, "Camo");
+                return PostsFragment.newInstance(1, "Images");
             case 2:
-                return PostsFragment.newInstance(2, "Mission");
+                return PostsFragment.newInstance(2, "Videos");
+            case 3:
+                return PostsFragment.newInstance(3, "Quotes");
+            case 4:
+                return PostsFragment.newInstance(5, "Camos");
+            case 5:
+                return PostsFragment.newInstance(6, "Missions");
+            case 6:
+                return PostsFragment.newInstance(7, "Locations");
+            case 7:
+                return PostsFragment.newInstance(8, "Models");
             default:
                 return null;
         }

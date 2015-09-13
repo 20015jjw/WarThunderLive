@@ -26,10 +26,14 @@ public class PostsFragment extends Fragment {
     private ArrayList posts;
     private View rootView;
 
-    public static PostsFragment newInstance(int page, String catalog) {
+    private int curPage = 0;
+    private int lastPage = -1;
+
+    public static PostsFragment newInstance(int index, String catalog) {
         PostsFragment postsFragment = new PostsFragment();
         Bundle args = new Bundle();
-        args.putInt("index", page);
+        args.putInt("index", index);
+        args.putInt("page", 0);
         args.putString("catalog", catalog);
         postsFragment.setArguments(args);
         return postsFragment;
@@ -48,9 +52,16 @@ public class PostsFragment extends Fragment {
         StaggeredGridView postsList = (StaggeredGridView) rootView.findViewById(R.id.posts_list);
         postsList.setAdapter(mPostsAdapter);
 
-        RequestMaker requestMaker = new RequestMaker(rootView, getArguments());
-        requestMaker.execute(this.getArguments());
+        request();
         return rootView;
+    }
+
+    public void request() {
+        if (lastPage < curPage) {
+            RequestMaker requestMaker = new RequestMaker(rootView, getArguments());
+            requestMaker.execute(this.getArguments());
+            lastPage ++;
+        }
     }
 
 }
