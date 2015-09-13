@@ -63,6 +63,8 @@ public class JsonParser {
                 post.put(key, readAuthor(reader));
             } else if (key.equals(API.timestamp)) {
                 post.put(key, reader.nextString());
+            } else if (key.equals(API.video_info)) {
+                post.put(key, readVideoImage(reader));
             } else {
                 reader.skipValue();
             }
@@ -100,7 +102,7 @@ public class JsonParser {
             reader.beginObject();
             while (reader.hasNext()) {
                 String key = reader.nextName();
-                if (key.equals(API.image_src)) {
+                if (key.equals(API.image_src) || key.equals(API.video_image_src)) {
                     images.add(reader.nextString());
                 } else {
                     reader.skipValue();
@@ -110,6 +112,25 @@ public class JsonParser {
         }
         reader.endArray();
         return images;
+    }
+
+    public String readVideoImage(JsonReader reader) throws IOException {
+        String vid_image = null;
+        reader.beginObject();
+        while (reader.hasNext()) {
+                String key = reader.nextName();
+                if (key.equals(API.video_image_src)) {
+                    vid_image = reader.nextString();
+                } else if (key.equals(API.video_type)){
+                    if (!reader.nextString().equals("youtube")) {
+                        vid_image = null;
+                    }
+                } else {
+                    reader.skipValue();
+                }
+            }
+        reader.endObject();
+        return vid_image;
     }
 
 

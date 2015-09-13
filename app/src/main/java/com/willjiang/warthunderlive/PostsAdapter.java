@@ -56,9 +56,13 @@ public class PostsAdapter extends ArrayAdapter {
 
         // thumbnail
         ArrayList images = (ArrayList) post.get(API.images);
+        String video_image_src = (String) post.get(API.video_info);
         if (!images.isEmpty()) {
             String imageURL = (String) (images).get(0);
             card.setThumbnailURL(imageURL);
+        }
+        if (video_image_src != null) {
+            card.setThumbnailURL(video_image_src);
         }
 
         // author

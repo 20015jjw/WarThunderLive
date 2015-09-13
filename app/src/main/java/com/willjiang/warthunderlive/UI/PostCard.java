@@ -1,6 +1,7 @@
 package com.willjiang.warthunderlive.UI;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import com.koushikdutta.ion.Ion;
 import com.willjiang.warthunderlive.Network.API;
+import com.willjiang.warthunderlive.PostDetailActivity;
 import com.willjiang.warthunderlive.R;
 
 import java.util.HashMap;
@@ -21,6 +23,7 @@ public class PostCard extends Card {
 
     protected String mDescription;
     protected String mThumbnailURL;
+    protected boolean hasThumbnail;
     protected String mTimestamp;
     protected HashMap<String, String> mAuthor;
 
@@ -44,8 +47,14 @@ public class PostCard extends Card {
             @Override
             public void onClick(Card card, View view) {
                 Toast.makeText(getContext(), "Click Listener card=", Toast.LENGTH_SHORT).show();
+                enterDetailView();
             }
         });
+    }
+
+    private void enterDetailView () {
+        Intent intent = new Intent(getContext(), PostDetailActivity.class);
+        getContext().startActivity(intent);
     }
 
     @Override
@@ -70,9 +79,11 @@ public class PostCard extends Card {
         description.setText(mDescription);
 
         // thumbnail
-        ImageView thumbnail = (ImageView) parent.findViewById(R.id.post_thumbnail);
-        ((IonCardThumbnail) getCardThumbnail()).setThumbnailURL(mThumbnailURL);
-        getCardThumbnail().setupInnerViewElements(parent, thumbnail);
+        if (this.hasThumbnail) {
+            ImageView thumbnail = (ImageView) parent.findViewById(R.id.post_thumbnail);
+            ((IonCardThumbnail) getCardThumbnail()).setThumbnailURL(mThumbnailURL);
+            getCardThumbnail().setupInnerViewElements(parent, thumbnail);
+        }
     }
 
     public void setDescription (String description) {
@@ -84,6 +95,7 @@ public class PostCard extends Card {
     }
 
     public void setThumbnailURL (String thumbnailURL) {
+        this.hasThumbnail = true;
         this.mThumbnailURL = thumbnailURL;
     }
 

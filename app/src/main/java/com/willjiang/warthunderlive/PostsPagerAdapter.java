@@ -49,7 +49,7 @@ public class PostsPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return PostsFragment.newInstance(1, "Camo");
             case 2:
-                return PostsFragment.newInstance(5, "Mission");
+                return PostsFragment.newInstance(2, "Mission");
             default:
                 return null;
         }
@@ -64,7 +64,7 @@ public class PostsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int index) {
-        return "Page " + index;
+        return tabTitles[index];
     }
 
     @Override
