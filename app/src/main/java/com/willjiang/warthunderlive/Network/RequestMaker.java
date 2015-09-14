@@ -56,9 +56,11 @@ public class RequestMaker extends AsyncTask<Bundle , Void, String> {
 
         String content = String.valueOf(args.getInt("index"));
         Log.v("request", "content " + content);
+        String page = String.valueOf(args.getInt("page"));
+        Log.v("request", "page " + page);
 
         RequestBody postBody = new FormEncodingBuilder()
-                .add("page", "0")
+                .add("page", page)
                 .add("content", content)
                 .add("sort", "1")
                 .add("user", "0")

@@ -10,6 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.builder.AnimateGifMode;
+import com.koushikdutta.ion.builder.Builders;
+import com.koushikdutta.ion.builder.ImageViewBuilder;
 import com.willjiang.warthunderlive.Network.API;
 import com.willjiang.warthunderlive.PostDetailActivity;
 import com.willjiang.warthunderlive.R;
@@ -46,7 +49,6 @@ public class PostCard extends Card {
         setOnClickListener(new OnCardClickListener() {
             @Override
             public void onClick(Card card, View view) {
-                Toast.makeText(getContext(), "Click Listener card=", Toast.LENGTH_SHORT).show();
                 enterDetailView();
             }
         });
@@ -72,6 +74,7 @@ public class PostCard extends Card {
         TimeStamp.setText(mTimestamp);
         // author avatar
         ((IonCardThumbnail) getCardThumbnail()).setThumbnailURL(this.mAuthor.get(API.author_avatar));
+        ((IonCardThumbnail) getCardThumbnail()).setThumbnailType("avatar");
         getCardThumbnail().setupInnerViewElements(parent, authorAvatar);
 
         // description
@@ -82,6 +85,7 @@ public class PostCard extends Card {
         if (this.hasThumbnail) {
             ImageView thumbnail = (ImageView) parent.findViewById(R.id.post_thumbnail);
             ((IonCardThumbnail) getCardThumbnail()).setThumbnailURL(mThumbnailURL);
+            ((IonCardThumbnail) getCardThumbnail()).setThumbnailType("content");
             getCardThumbnail().setupInnerViewElements(parent, thumbnail);
         }
     }
@@ -110,9 +114,14 @@ public class PostCard extends Card {
     class IonCardThumbnail extends CardThumbnail {
 
         protected String mThumbnailURL;
+        private String mType;
 
         public IonCardThumbnail(Context context) {
             super(context);
+        }
+
+        public void setThumbnailType(String type) {
+            this.mType = type;
         }
 
         public void setThumbnailURL(String URL) {
@@ -121,8 +130,16 @@ public class PostCard extends Card {
 
         @Override
         public void setupInnerViewElements(ViewGroup parent, View viewImage) {
-            Ion.with((ImageView) viewImage)
-                    .load(this.mThumbnailURL);
+            if (this.mType.equals("avatar")) {
+
+                Ion.with((ImageView) viewImage)
+                        .placeholder(R.drawable.no_avatar)
+                        .error(R.drawable.no_avatar)
+                        .load(this.mThumbnailURL);
+            } else {
+                Ion.with((ImageView) viewImage)
+                        .load(this.mThumbnailURL);
+            }
         }
 
         public String getTitle() {

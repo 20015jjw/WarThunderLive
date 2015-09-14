@@ -2,9 +2,11 @@ package com.willjiang.warthunderlive.UI;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 
 import com.etsy.android.grid.StaggeredGridView;
@@ -19,18 +21,22 @@ import java.util.ArrayList;
  */
 public class PostsFragment extends Fragment {
 
-    private int index;
-    private String catelog;
-
     private ArrayAdapter mPostsAdapter;
     private ArrayList posts;
     private View rootView;
 
-    private int curPage = 0;
-    private int lastPage = -1;
+    private int curPage;
+    private int lastPage;
+
+    private int load;
 
     public static PostsFragment newInstance(int index, String catalog) {
         PostsFragment postsFragment = new PostsFragment();
+
+        postsFragment.curPage = 0;
+        postsFragment.lastPage = -1;
+        postsFragment.load = 25;
+
         Bundle args = new Bundle();
         args.putInt("index", index);
         args.putInt("page", 0);
@@ -52,16 +58,47 @@ public class PostsFragment extends Fragment {
         StaggeredGridView postsList = (StaggeredGridView) rootView.findViewById(R.id.posts_list);
         postsList.setAdapter(mPostsAdapter);
 
+        postsList.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                Log.v("posts_scroll_first", String.valueOf(firstVisibleItem));
+                Log.v("posts_scroll_total", String.valueOf(totalItemCount));
+                Log.v("posts_scroll_cur_page", String.valueOf(curPage));
+                if (firstVisibleItem >= load - 1) {
+                    load += 25;
+                    increasePage(totalItemCount);
+                }
+            }
+        });
+
         request();
         return rootView;
     }
 
-    public void request() {
+    private void request() {
         if (lastPage < curPage) {
+            Bundle args = getArguments();
+            args.putInt("page", curPage);
+            Log.v("curPage", String.valueOf(curPage));
             RequestMaker requestMaker = new RequestMaker(rootView, getArguments());
             requestMaker.execute(this.getArguments());
             lastPage ++;
         }
+    }
+
+    public void increasePage(int curLoad) {
+        Log.v("increase", "" + curLoad);
+        if (curLoad < load) {
+            curPage ++;
+            request();
+        }
+
+
     }
 
 }
