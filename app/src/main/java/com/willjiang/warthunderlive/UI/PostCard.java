@@ -24,6 +24,8 @@ import it.gmariotti.cardslib.library.internal.CardThumbnail;
 
 public class PostCard extends Card {
 
+    protected String id;
+    protected String language;
     protected String mDescription;
     protected String mThumbnailURL;
     protected boolean hasThumbnail;
@@ -56,6 +58,8 @@ public class PostCard extends Card {
 
     private void enterDetailView () {
         Intent intent = new Intent(getContext(), PostDetailActivity.class);
+        intent.putExtra(API.id, this.id);
+        intent.putExtra(API.language, this.language);
         getContext().startActivity(intent);
     }
 
@@ -101,6 +105,14 @@ public class PostCard extends Card {
     public void setThumbnailURL (String thumbnailURL) {
         this.hasThumbnail = true;
         this.mThumbnailURL = thumbnailURL;
+    }
+
+    public void setID(String id) {
+        this.id = id;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public void setAuthor (HashMap author) {

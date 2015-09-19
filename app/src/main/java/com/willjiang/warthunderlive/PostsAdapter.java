@@ -50,6 +50,12 @@ public class PostsAdapter extends ArrayAdapter {
 
         PostCard card = new PostCard(getContext());
 
+        // id and language
+        String id = (String) post.get(API.id);
+        String lang = (String) post.get(API.language);
+        card.setID(id);
+        card.setLanguage(lang);
+
         // description
         String rawText = (String) post.get(API.description);
         card.setDescription(Html.fromHtml(rawText).toString());

@@ -2,6 +2,7 @@ package com.willjiang.warthunderlive.Network;
 
 import android.content.Context;
 import android.util.JsonReader;
+import android.util.Log;
 
 import com.willjiang.warthunderlive.R;
 
@@ -55,7 +56,12 @@ public class JsonParser {
 
         while (reader.hasNext()) {
             String key = reader.nextName();
+            Log.v("Parser", key);
             if (key.equals(API.description)) {
+                post.put(key, reader.nextString());
+            } else if (key.equals(API.language)) {
+                post.put(key, reader.nextString());
+            } else if (key.equals(API.id)) {
                 post.put(key, reader.nextString());
             } else if (key.equals(API.images)) {
                 post.put(key, readImages(reader));

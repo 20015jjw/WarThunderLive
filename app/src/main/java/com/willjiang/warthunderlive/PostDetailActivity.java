@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.willjiang.warthunderlive.Network.API;
 
 public class PostDetailActivity extends AppCompatActivity {
 
@@ -11,6 +14,11 @@ public class PostDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
+        TextView textView = (TextView) findViewById(R.id.post_detail_text);
+        String id = getIntent().getStringExtra(API.id);
+        String lang = getIntent().getStringExtra(API.language);
+        textView.setText(id + " " + lang);
+
     }
 
     @Override
