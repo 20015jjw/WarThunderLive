@@ -2,6 +2,7 @@ package com.willjiang.warthunderlive.Network;
 
 import android.content.Context;
 import android.util.JsonReader;
+import android.util.JsonToken;
 import android.util.Log;
 
 import com.willjiang.warthunderlive.R;
@@ -56,7 +57,6 @@ public class JsonParser {
 
         while (reader.hasNext()) {
             String key = reader.nextName();
-            Log.v("Parser", key);
             if (key.equals(API.description)) {
                 post.put(key, reader.nextString());
             } else if (key.equals(API.language)) {
@@ -108,8 +108,12 @@ public class JsonParser {
             reader.beginObject();
             while (reader.hasNext()) {
                 String key = reader.nextName();
-                if (key.equals(API.image_src) || key.equals(API.video_image_src)) {
-                    images.add(reader.nextString());
+                if (key.equals(API.image_src)) {
+                    if (reader.peek() != JsonToken.BOOLEAN) {
+                        images.add(reader.nextString());
+                    } else {
+                        reader.skipValue();
+                    }
                 } else {
                     reader.skipValue();
                 }
