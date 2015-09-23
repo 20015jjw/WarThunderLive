@@ -30,7 +30,9 @@ public class PostsFragment extends Fragment {
 
     private int load;
 
-    public static PostsFragment newInstance(int index, String catalog) {
+    public static PostsFragment newInstance(int index, String catalog, int period) {
+        // it generates new fragments whenever it returns to Mainactivity...
+        Log.v("postsFrag", "new item");
         PostsFragment postsFragment = new PostsFragment();
 
         postsFragment.curPage = 0;
@@ -41,6 +43,7 @@ public class PostsFragment extends Fragment {
         args.putInt("index", index);
         args.putInt("page", 0);
         args.putString("catalog", catalog);
+        args.putInt("period", period);
         postsFragment.setArguments(args);
         return postsFragment;
     }
@@ -66,9 +69,9 @@ public class PostsFragment extends Fragment {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                Log.v("posts_scroll_first", String.valueOf(firstVisibleItem));
-                Log.v("posts_scroll_total", String.valueOf(totalItemCount));
-                Log.v("posts_scroll_cur_page", String.valueOf(curPage));
+//                Log.v("posts_scroll_first", String.valueOf(firstVisibleItem));
+//                Log.v("posts_scroll_total", String.valueOf(totalItemCount));
+//                Log.v("posts_scroll_cur_page", String.valueOf(curPage));
                 if (firstVisibleItem >= load - 1) {
                     load += 25;
                     increasePage(totalItemCount);
@@ -84,8 +87,7 @@ public class PostsFragment extends Fragment {
         if (lastPage < curPage) {
             Bundle args = getArguments();
             args.putInt("page", curPage);
-            Log.v("curPage", String.valueOf(curPage));
-            RequestMaker requestMaker = new RequestMaker(rootView, getArguments());
+            RequestMaker requestMaker = new RequestMaker(getActivity(), rootView, args);
             requestMaker.execute(this.getArguments());
             lastPage ++;
         }
@@ -97,8 +99,11 @@ public class PostsFragment extends Fragment {
             curPage ++;
             request();
         }
+    }
 
-
+    public void setPeriod(int period) {
+        Bundle args = this.getArguments();
+        args.putInt("period", period);
     }
 
 }

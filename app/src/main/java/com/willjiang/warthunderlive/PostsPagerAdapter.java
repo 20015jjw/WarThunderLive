@@ -26,11 +26,13 @@ public class PostsPagerAdapter extends FragmentPagerAdapter {
     private SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
     private RequestMaker mRequestMaker;
     private String tabTitles[];
+    private int period;
 
-    public PostsPagerAdapter(View rootView, FragmentManager fragmentManager, Context context) {
+    public PostsPagerAdapter(View rootView, FragmentManager fragmentManager, Context context, int period) {
         super(fragmentManager);
         this.rootView = rootView;
         this.mContext = context;
+        this.period = period;
         tabTitles = mContext.getResources().
             getStringArray(R.array.tab_headers);
     }
@@ -42,24 +44,23 @@ public class PostsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int index) {
-        Log.v("pager adapter", "getting item" + index);
         switch (index) {
             case 0:
-                return PostsFragment.newInstance(0, "All");
+                return PostsFragment.newInstance(0, "All", period);
             case 1:
-                return PostsFragment.newInstance(1, "Images");
+                return PostsFragment.newInstance(1, "Images", period);
             case 2:
-                return PostsFragment.newInstance(2, "Videos");
+                return PostsFragment.newInstance(2, "Videos", period);
             case 3:
-                return PostsFragment.newInstance(3, "Quotes");
+                return PostsFragment.newInstance(3, "Quotes", period);
             case 4:
-                return PostsFragment.newInstance(5, "Camos");
+                return PostsFragment.newInstance(5, "Camos", period);
             case 5:
-                return PostsFragment.newInstance(6, "Missions");
+                return PostsFragment.newInstance(6, "Missions", period);
             case 6:
-                return PostsFragment.newInstance(7, "Locations");
+                return PostsFragment.newInstance(7, "Locations", period);
             case 7:
-                return PostsFragment.newInstance(8, "Models");
+                return PostsFragment.newInstance(8, "Models", period);
             default:
                 return null;
         }
@@ -85,6 +86,18 @@ public class PostsPagerAdapter extends FragmentPagerAdapter {
 
     public Fragment getRegisteredFragment(int position) {
         return registeredFragments.get(position);
+    }
+
+    public void setPeriod (int period) {
+        Log.v("setting Period", "" + period);
+        this.period = period;
+        for (int i = 0, size = registeredFragments.size(); i < size; i++) {
+            ((PostsFragment) registeredFragments.valueAt(i)).setPeriod(period);
+        }
+    }
+
+    public int getPeriod () {
+        return this.period;
     }
 
 }

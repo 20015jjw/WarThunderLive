@@ -1,6 +1,9 @@
 package com.willjiang.warthunderlive;
 
 import android.app.ActionBar;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -9,22 +12,28 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.willjiang.warthunderlive.Network.RequestMaker;
 import com.willjiang.warthunderlive.UI.PostsFragment;
 
+import java.util.prefs.PreferenceChangeEvent;
+
 public class MainActivity extends AppCompatActivity {
+
+    private ViewPager mPostsPager;
+    private PostsPagerAdapter mPostsPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final ViewPager postsPager = (ViewPager) findViewById(R.id.posts_pager);
-        PostsPagerAdapter postsPagerAdapter = new PostsPagerAdapter(this.findViewById(R.id.main),
-                getSupportFragmentManager(), this);
-        postsPager.setAdapter(postsPagerAdapter);
+        mPostsPager = (ViewPager) findViewById(R.id.posts_pager);
+        mPostsPagerAdapter = new PostsPagerAdapter(this.findViewById(R.id.main),
+                getSupportFragmentManager(), this, 0);
+        mPostsPager.setAdapter(mPostsPagerAdapter);
         TabLayout PostsHeader = (TabLayout) findViewById(R.id.posts_pager_header);
-        PostsHeader.setupWithViewPager(postsPager);
+        PostsHeader.setupWithViewPager(mPostsPager);
 
     }
 
@@ -43,9 +52,23 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.period_switch) {
+            onSwitch();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onSwitch() {
+        int curPeriod = mPostsPagerAdapter.getPeriod();
+        if (curPeriod == 7) {
+            curPeriod = 30;
+            Log.v("switch", "" + curPeriod);
+        } else if (curPeriod == 30) {
+            curPeriod = 0;
+        } else if (curPeriod == 0) {
+            curPeriod = 7;
+        }
+        mPostsPagerAdapter.setPeriod(curPeriod);
     }
 }
