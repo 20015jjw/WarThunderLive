@@ -104,10 +104,14 @@ public class PostsFragment extends Fragment {
     public void setPeriod(int period) {
         Bundle args = this.getArguments();
         args.putInt("period", period);
+        clearPosts();
+        request();
+    }
+
+    private void clearPosts() {
+        mPostsAdapter.clear();
         curPage = 0;
         lastPage = -1;
-        mPostsAdapter.clear();
-        request();
     }
 
 }
