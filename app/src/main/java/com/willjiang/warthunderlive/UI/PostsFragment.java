@@ -112,6 +112,7 @@ public class PostsFragment extends Fragment {
         mPostsAdapter.clear();
         curPage = 0;
         lastPage = -1;
+        load = 25;
     }
 
 }
