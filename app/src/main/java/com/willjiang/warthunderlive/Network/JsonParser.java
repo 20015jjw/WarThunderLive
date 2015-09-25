@@ -88,7 +88,11 @@ public class JsonParser {
             while (reader.hasNext()) {
                 String key = reader.nextName();
                 if (key.equals(API.author_avatar)) {
-                    author.put(key, reader.nextString());
+                    String imgURL = reader.nextString();
+                    if (imgURL.length() > 80) {
+                        imgURL = Utils.imageQuality(imgURL, 2);
+                    }
+                    author.put(key, imgURL);
                 } else if (key.equals(API.author_nickname)){
                     author.put(key, reader.nextString());
                 } else if (key.equals(API.author_id)) {

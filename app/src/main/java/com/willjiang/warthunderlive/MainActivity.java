@@ -9,6 +9,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        Toolbar toobar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toobar);
         mPostsPager = (ViewPager) findViewById(R.id.posts_pager);
         mPostsPagerAdapter = new PostsPagerAdapter(this.findViewById(R.id.main),
                 getSupportFragmentManager(), this, 0);
