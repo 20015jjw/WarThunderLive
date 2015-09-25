@@ -18,12 +18,12 @@ import java.util.List;
  */
 public class ParserTest extends ApplicationTest {
 
-    public void testParser() throws IOException, JSONException{
-        RequestMaker requestMaker = new RequestMaker();
-        InputStream in = requestMaker.makeRequest();
-        JsonParser parser = new JsonParser();
-        List posts = parser.readJsonStream(in);
-        Log.i("v", "done");
-    }
+//    public void testParser() throws IOException, JSONException{
+//        RequestMaker requestMaker = new RequestMaker();
+//        InputStream in = requestMaker.makeRequest();
+//        JsonParser parser = new JsonParser();
+//        List posts = parser.readJsonStream(in);
+//        Log.i("v", "done");
+//    }
 
 }

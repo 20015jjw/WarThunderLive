@@ -42,7 +42,6 @@ public class RequestMaker extends AsyncTask<Bundle , Void, String> {
     private List response;
     private Bundle args;
 
-    private SharedPreferences mSharedPreferences;
 
     private OkHttpClient CLIENT = new OkHttpClient();
 
@@ -59,34 +58,52 @@ public class RequestMaker extends AsyncTask<Bundle , Void, String> {
 
     public InputStream makeRequest() throws IOException {
 
-        String content = String.valueOf(args.getInt("index"));
-        String page = String.valueOf(args.getInt("page"));
-        String period = String.valueOf(args.getInt("period"));
-        Log.v("req", "" + period);
+        String type = args.getString("type");
+        Request request;
+        Response response;
 
-        RequestBody postBody = new FormEncodingBuilder()
-                .add("page", page)
-                .add("content", content)
-                .add("sort", "1")
-                .add("user", "0")
-                .add("period", period)
-                .build();
+        if (type.equals("feed")) {
 
-        Request request = new Request.Builder()
-                .url(API.unLogged)
-                .post(postBody)
-                .build();
+            String content = String.valueOf(args.getInt("index"));
+            String page = String.valueOf(args.getInt("page"));
+            String period = String.valueOf(args.getInt("period"));
 
-        Response response = CLIENT.newCall(request).execute();
+            RequestBody postBody = new FormEncodingBuilder()
+                    .add("page", page)
+                    .add("content", content)
+                    .add("sort", "1")
+                    .add("user", "0")
+                    .add("period", period)
+                    .build();
 
+            request = new Request.Builder()
+                    .url(API.unLogged)
+                    .post(postBody)
+                    .build();
+
+//        } else if (type.equals("post")) {
+
+        } else {
+
+            String id = String.valueOf(args.getInt("id"));
+
+            RequestBody postBody = new FormEncodingBuilder()
+            .add("lang_group", id)
+            .add("language", "en")
+            .build();
+
+            request = new Request.Builder()
+                    .url(API.postURL)
+                    .post(postBody)
+                    .build();
+        }
+
+        response = CLIENT.newCall(request).execute();
         return response.body().byteStream();
     }
 
     @Override
     protected String doInBackground(Bundle... params) {
-        Bundle args = params[0];
-        this.args = args;
-
         try {
             JsonParser parser = new JsonParser(this.mContext);
             response = parser.readJsonStream(makeRequest());
@@ -98,9 +115,13 @@ public class RequestMaker extends AsyncTask<Bundle , Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        StaggeredGridView listView = (StaggeredGridView) rootView.findViewById(R.id.posts_list);
-        ((PostsAdapter) listView.getAdapter()).addAll(response);
-        ((PostsAdapter) listView.getAdapter()).notifyDataSetChanged();
+        String type = args.getString("type");
+        if (type.equals("feed")) {
+            StaggeredGridView listView = (StaggeredGridView) rootView.findViewById(R.id.posts_list);
+            ((PostsAdapter) listView.getAdapter()).addAll(response);
+            ((PostsAdapter) listView.getAdapter()).notifyDataSetChanged();
+        } else {
+        }
     }
 
 }

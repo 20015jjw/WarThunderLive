@@ -2,24 +2,31 @@ package com.willjiang.warthunderlive;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.willjiang.warthunderlive.Network.API;
 
 public class PostDetailActivity extends AppCompatActivity {
 
+    private String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
-        TextView textView = (TextView) findViewById(R.id.post_detail_text);
-        String id = getIntent().getStringExtra(API.id);
-        String lang = getIntent().getStringExtra(API.language);
-        textView.setText(id + " " + lang);
-
+        id = getIntent().getStringExtra(API.id);
     }
+
+
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

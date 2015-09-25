@@ -6,6 +6,7 @@ import android.util.JsonToken;
 import android.util.Log;
 
 import com.willjiang.warthunderlive.R;
+import com.willjiang.warthunderlive.Utils;
 
 import org.json.JSONObject;
 
@@ -110,7 +111,9 @@ public class JsonParser {
                 String key = reader.nextName();
                 if (key.equals(API.image_src)) {
                     if (reader.peek() != JsonToken.BOOLEAN) {
-                        images.add(reader.nextString());
+                        String imgURL = reader.nextString();
+                        imgURL = Utils.imageQuality(imgURL, 1);
+                        images.add(imgURL);
                     } else {
                         reader.skipValue();
                     }

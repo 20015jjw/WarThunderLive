@@ -40,6 +40,7 @@ public class PostsFragment extends Fragment {
         postsFragment.load = 25;
 
         Bundle args = new Bundle();
+        args.putString("type", "feed");
         args.putInt("index", index);
         args.putInt("page", 0);
         args.putString("catalog", catalog);

@@ -8,6 +8,8 @@ public class API {
     public static final String baseURL = "http://live.warthunder.com/api";
     public static final String unLogged = baseURL + "/feed/get_unlogged/";
 
+    public static final String postURL = baseURL + "/posts/get/";
+
     // Request paths
     public static final String posts_page = "page";
     public static final String posts_content = "content";

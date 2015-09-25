@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         mPostsPager = (ViewPager) findViewById(R.id.posts_pager);
         mPostsPagerAdapter = new PostsPagerAdapter(this.findViewById(R.id.main),
@@ -34,7 +35,21 @@ public class MainActivity extends AppCompatActivity {
         mPostsPager.setAdapter(mPostsPagerAdapter);
         TabLayout PostsHeader = (TabLayout) findViewById(R.id.posts_pager_header);
         PostsHeader.setupWithViewPager(mPostsPager);
+    }
 
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Restore state members from saved instance
+        mPostsPager.setCurrentItem(savedInstanceState.getInt("currentPage"));
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt("currentPage", mPostsPager.getCurrentItem());
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override

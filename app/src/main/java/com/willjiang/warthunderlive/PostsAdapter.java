@@ -77,23 +77,14 @@ public class PostsAdapter extends ArrayAdapter {
 
         // timestamp
         String rawTimestamp = (String) post.get(API.timestamp);
-        String timestamp = getDate(Long.valueOf(rawTimestamp) * 1000);
+        String timestamp = Utils.getDate(Long.valueOf(rawTimestamp) * 1000);
         card.setTimestamp(timestamp);
 
         ((CardViewNative) convertView).setCard(card);
         return convertView;
     }
 
-    private String getDate(long time) {
-        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        cal.setTimeInMillis(time);
-        String date = DateFormat.format("LLLL dd, yyyy HH:mm", cal).toString();
 
-        if (date.substring(6, 10).equals("2015")) {
-            date = date.substring(0, 5) + date.substring(10);
-        }
-        return date;
-    }
 
 
 
