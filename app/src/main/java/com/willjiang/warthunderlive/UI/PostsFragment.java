@@ -66,7 +66,6 @@ public class PostsFragment extends Fragment {
             public void onScrolled(RecyclerView view, int dx, int dy) {
                 int totalItemCount = layoutManager.getChildCount();
                 int firstVisibleItem= layoutManager.findFirstVisibleItemPositions(null)[0];
-//                Log.v("scroll", "" + pastVisibleItems[0]);
 
                 if (firstVisibleItem >= load - 1) {
                     load += 25;

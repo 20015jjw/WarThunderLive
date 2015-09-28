@@ -14,7 +14,11 @@ import com.willjiang.warthunderlive.Network.API;
 import com.willjiang.warthunderlive.PostDetailActivity;
 import com.willjiang.warthunderlive.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -29,6 +33,7 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
     protected String authorName;
     protected String authorAvatarURL;
     protected String authorID;
+    protected ArrayList<String> images;
 
     public PostCardHolder(View card) {
         super(card);
@@ -75,6 +80,10 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         return mDescription;
     }
 
+    public void setImages(ArrayList<String> images) {
+        this.hasThumbnail = true;
+        this.images = images;
+    }
     public void setThumbnailURL (String thumbnailURL) {
         this.hasThumbnail = true;
         this.mThumbnailURL = thumbnailURL;
@@ -111,6 +120,7 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         intent.putExtra(API.author_avatar, authorAvatarURL);
         intent.putExtra(API.timestamp, mTimestamp);
         intent.putExtra(API.description, mDescription);
+        intent.putStringArrayListExtra(API.images, images);
         context.startActivity(intent);
     }
 

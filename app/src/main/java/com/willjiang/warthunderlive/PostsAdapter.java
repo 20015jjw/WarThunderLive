@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.willjiang.warthunderlive.Network.API;
 import com.willjiang.warthunderlive.UI.PostCardHolder;
@@ -61,6 +60,7 @@ public class PostsAdapter extends RecyclerView.Adapter {
         if (!images.isEmpty()) {
             String imageURL = (String) (images).get(0);
             card.setThumbnailURL(imageURL);
+            card.setImages(images);
         }
         if (video_image_src != null) {
             card.setThumbnailURL(video_image_src);
@@ -81,7 +81,7 @@ public class PostsAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View postCard = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_post, null);
+        View postCard = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_postcard, null);
         PostCardHolder cardHolder = new PostCardHolder(postCard);
         return cardHolder;
     }

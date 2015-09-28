@@ -3,14 +3,23 @@ package com.willjiang.warthunderlive;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.koushikdutta.ion.Ion;
 import com.willjiang.warthunderlive.Network.API;
+
+import java.util.ArrayList;
+import java.util.zip.Inflater;
+
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class PostDetailActivity extends AppCompatActivity {
 
@@ -47,11 +56,16 @@ public class PostDetailActivity extends AppCompatActivity {
         TextView description = (TextView) findViewById(R.id.post_detail_description);
         description.setText(descriptionText);
 
-        // thumbnail
-//        if (this.hasThumbnail) {
-//            ImageView thumbnail = (ImageView) card.findViewById(R.id.post_thumbnail);
-//            Ion.with(thumbnail)
-//                    .load(mThumbnailURL);
+        ArrayList<String> imagesURLs = intent.getStringArrayListExtra(API.images);
+        LinearLayout images = (LinearLayout) findViewById(R.id.post_detail_image_list);
+        LayoutInflater inflater = getLayoutInflater();
+        for (String imagesURL : imagesURLs) {
+            ImageView image = (ImageView) inflater.inflate(R.layout.post_image_container, images, false);
+            images.addView(image);
+            Ion.with(image)
+                .load(imagesURL);
+            new PhotoViewAttacher(image);
+        }
     }
 
 
