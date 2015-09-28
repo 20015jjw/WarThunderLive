@@ -5,11 +5,14 @@
     android:id="@+id/post_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="2dp">
+    card_view:cardCornerRadius="2dp"
+    card_view:cardUseCompatPadding="true"
+    android:layout_margin="8dp">
 
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:padding="8dp"
         android:orientation="vertical">
 
         <LinearLayout
