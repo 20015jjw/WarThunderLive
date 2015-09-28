@@ -62,9 +62,11 @@ public class PostDetailActivity extends AppCompatActivity {
         for (String imagesURL : imagesURLs) {
             ImageView image = (ImageView) inflater.inflate(R.layout.post_image_container, images, false);
             images.addView(image);
+            if (imagesURL.length() > 80) {
+                imagesURL = Utils.imageQuality(imagesURL, 2);
+            }
             Ion.with(image)
                 .load(imagesURL);
-            new PhotoViewAttacher(image);
         }
     }
 
