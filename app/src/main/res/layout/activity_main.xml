@@ -29,27 +29,8 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/posts_pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>
 
-<!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="vertical"-->
-    <!--android:id="@+id/main"-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android">-->
-
-    <!--<android.support.design.widget.TabLayout-->
-        <!--android:id="@+id/posts_pager_header"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:tabMode="scrollable" />-->
-
-    <!--<android.support.v4.view.ViewPager-->
-        <!--android:id="@+id/posts_pager"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-    <!--</android.support.v4.view.ViewPager>-->
-<!--</LinearLayout>-->

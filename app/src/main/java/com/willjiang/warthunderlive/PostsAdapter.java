@@ -35,6 +35,11 @@ public class PostsAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public void clear() {
+        this.posts.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
         HashMap post = (HashMap) posts.get(i);

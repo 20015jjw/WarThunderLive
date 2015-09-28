@@ -25,7 +25,7 @@ import java.util.ArrayList;
  */
 public class PostsFragment extends Fragment {
 
-    private RecyclerView.Adapter mPostsAdapter;
+    private PostsAdapter mPostsAdapter;
     private ArrayList posts;
     private View rootView;
 
@@ -64,24 +64,24 @@ public class PostsFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_posts, container, false);
 
         RecyclerView postsList = (RecyclerView) rootView.findViewById(R.id.posts_list);
-        postsList.setLayoutManager(new StaggeredGridLayoutManager(1, 1));
+        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, 1);
+        postsList.setLayoutManager(layoutManager);
         postsList.setAdapter(mPostsAdapter);
 
-//        postsList.setOnScrollListener(new RecyclerView.OnScrollListener() {
-//            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//
-//            }
-//
-//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-////                Log.v("posts_scroll_first", String.valueOf(firstVisibleItem));
-////                Log.v("posts_scroll_total", String.valueOf(totalItemCount));
-////                Log.v("posts_scroll_cur_page", String.valueOf(curPage));
-//                if (firstVisibleItem >= load - 1) {
-//                    load += 25;
-//                    increasePage(totalItemCount);
-//                }
-//            }
-//        });
+        postsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView view, int dx, int dy) {
+                int totalItemCount = layoutManager.getChildCount();
+                int firstVisibleItem= layoutManager.findFirstVisibleItemPositions(null)[0];
+//                Log.v("scroll", "" + pastVisibleItems[0]);
+
+                if (firstVisibleItem >= load - 1) {
+                    load += 25;
+                    increasePage(totalItemCount);
+                }
+            }
+        });
 
         request();
         return rootView;
@@ -113,10 +113,10 @@ public class PostsFragment extends Fragment {
     }
 
     private void clearPosts() {
-//        mPostsAdapter.clear();
-//        curPage = 0;
-//        lastPage = -1;
-//        load = 25;
+        mPostsAdapter.clear();
+        curPage = 0;
+        lastPage = -1;
+        load = 25;
     }
 
 }
