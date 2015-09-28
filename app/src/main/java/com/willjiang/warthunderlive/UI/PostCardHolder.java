@@ -63,9 +63,10 @@ public class PostCardHolder extends RecyclerView.ViewHolder {
         // timestamp
         TimeStamp.setText(mTimestamp);
         // author avatar
-//        ((IonCardThumbnail) getCardThumbnail()).setThumbnailURL(this.mAuthor.get(API.author_avatar));
-//        ((IonCardThumbnail) getCardThumbnail()).setThumbnailType("avatar");
-//        getCardThumbnail().setupInnerViewElements(parent, authorAvatar);
+        Ion.with(authorAvatar)
+                .placeholder(R.drawable.no_avatar)
+                .error(R.drawable.no_avatar)
+                .load(mAuthor.get(API.author_avatar));
 
         // description
         TextView description = (TextView) card.findViewById(R.id.post_description);
@@ -73,10 +74,9 @@ public class PostCardHolder extends RecyclerView.ViewHolder {
 
         // thumbnail
         if (this.hasThumbnail) {
-//            ImageView thumbnail = (ImageView) parent.findViewById(R.id.post_thumbnail);
-//            ((IonCardThumbnail) getCardThumbnail()).setThumbnailURL(mThumbnailURL);
-//            ((IonCardThumbnail) getCardThumbnail()).setThumbnailType("content");
-//            getCardThumbnail().setupInnerViewElements(parent, thumbnail);
+            ImageView thumbnail = (ImageView) card.findViewById(R.id.post_thumbnail);
+            Ion.with(thumbnail)
+                    .load(mThumbnailURL);
         }
     }
 
