@@ -3,9 +3,11 @@ package com.willjiang.warthunderlive;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.willjiang.warthunderlive.Network.API;
 import com.willjiang.warthunderlive.UI.PostCardHolder;
@@ -25,8 +27,12 @@ public class PostsAdapter extends RecyclerView.Adapter {
     }
 
     public void addAll(List list) {
-        this.posts.addAll(list);
-        notifyDataSetChanged();
+        if (list != null) {
+            this.posts.addAll(list);
+            notifyDataSetChanged();
+        } else {
+            Log.e("posts adapter", "empty post list");
+        }
     }
 
     public void clear() {
