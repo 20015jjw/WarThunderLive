@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:staggered="http://schemas.android.com/tools"
-    android:orientation="vertical"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/posts_fragment">
-
-    <!--this might crash on lollipop, need furthur testing-->
-    <com.etsy.android.grid.StaggeredGridView
+    android:padding="8dp">
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/posts_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:item_margin="8dp"
-        app:column_count="1" />
+        android:scrollbars="vertical" />
+</RelativeLayout>
 
-</LinearLayout>
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:staggered="http://schemas.android.com/tools"-->
+    <!--android:orientation="vertical"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:id="@+id/posts_fragment">-->
+
+    <!--&lt;!&ndash;this might crash on lollipop, need furthur testing&ndash;&gt;-->
+    <!--<com.etsy.android.grid.StaggeredGridView-->
+        <!--android:id="@+id/posts_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:item_margin="8dp"-->
+        <!--app:column_count="1" />-->
+
+<!--</LinearLayout>-->

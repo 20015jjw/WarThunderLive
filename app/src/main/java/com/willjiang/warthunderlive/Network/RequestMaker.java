@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
@@ -117,9 +118,8 @@ public class RequestMaker extends AsyncTask<Bundle , Void, String> {
     protected void onPostExecute(String result) {
         String type = args.getString("type");
         if (type.equals("feed")) {
-            StaggeredGridView listView = (StaggeredGridView) rootView.findViewById(R.id.posts_list);
-            ((PostsAdapter) listView.getAdapter()).addAll(response);
-            ((PostsAdapter) listView.getAdapter()).notifyDataSetChanged();
+            RecyclerView posts_list = (RecyclerView) rootView.findViewById(R.id.posts_list);
+            ((PostsAdapter) posts_list.getAdapter()).addAll(response);
         } else {
         }
     }

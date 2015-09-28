@@ -2,6 +2,9 @@ package com.willjiang.warthunderlive.UI;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +24,7 @@ import java.util.ArrayList;
  */
 public class PostsFragment extends Fragment {
 
-    private ArrayAdapter mPostsAdapter;
+    private RecyclerView.Adapter mPostsAdapter;
     private ArrayList posts;
     private View rootView;
 
@@ -59,26 +62,25 @@ public class PostsFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_posts, container, false);
 
-        StaggeredGridView postsList = (StaggeredGridView) rootView.findViewById(R.id.posts_list);
+        RecyclerView postsList = (RecyclerView) rootView.findViewById(R.id.posts_list);
+        postsList.setLayoutManager(new StaggeredGridLayoutManager(1, 1));
         postsList.setAdapter(mPostsAdapter);
 
-        postsList.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//                Log.v("posts_scroll_first", String.valueOf(firstVisibleItem));
-//                Log.v("posts_scroll_total", String.valueOf(totalItemCount));
-//                Log.v("posts_scroll_cur_page", String.valueOf(curPage));
-                if (firstVisibleItem >= load - 1) {
-                    load += 25;
-                    increasePage(totalItemCount);
-                }
-            }
-        });
+//        postsList.setOnScrollListener(new RecyclerView.OnScrollListener() {
+//            public void onScrollStateChanged(AbsListView view, int scrollState) {
+//
+//            }
+//
+//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+////                Log.v("posts_scroll_first", String.valueOf(firstVisibleItem));
+////                Log.v("posts_scroll_total", String.valueOf(totalItemCount));
+////                Log.v("posts_scroll_cur_page", String.valueOf(curPage));
+//                if (firstVisibleItem >= load - 1) {
+//                    load += 25;
+//                    increasePage(totalItemCount);
+//                }
+//            }
+//        });
 
         request();
         return rootView;
@@ -110,10 +112,10 @@ public class PostsFragment extends Fragment {
     }
 
     private void clearPosts() {
-        mPostsAdapter.clear();
-        curPage = 0;
-        lastPage = -1;
-        load = 25;
+//        mPostsAdapter.clear();
+//        curPage = 0;
+//        lastPage = -1;
+//        load = 25;
     }
 
 }

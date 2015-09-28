@@ -32,10 +32,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toobar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toobar);
+
         mPostsPager = (ViewPager) findViewById(R.id.posts_pager);
         mPostsPagerAdapter = new PostsPagerAdapter(this.findViewById(R.id.main),
                 getSupportFragmentManager(), this, 0);
         mPostsPager.setAdapter(mPostsPagerAdapter);
+
         TabLayout PostsHeader = (TabLayout) findViewById(R.id.posts_pager_header);
         PostsHeader.setupWithViewPager(mPostsPager);
     }
