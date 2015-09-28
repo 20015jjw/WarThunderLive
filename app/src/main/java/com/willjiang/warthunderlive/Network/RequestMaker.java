@@ -1,42 +1,23 @@
 package com.willjiang.warthunderlive.Network;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import com.etsy.android.grid.StaggeredGridView;
 import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import com.willjiang.warthunderlive.PostsAdapter;
-import com.willjiang.warthunderlive.PostsPagerAdapter;
 import com.willjiang.warthunderlive.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.xml.transform.Result;
-
-/**
- * Created by Will on 9/1/15.
- */
 public class RequestMaker extends AsyncTask<Bundle , Void, String> {
     private Context mContext;
     private View rootView;

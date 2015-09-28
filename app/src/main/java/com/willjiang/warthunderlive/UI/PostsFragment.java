@@ -2,27 +2,19 @@ package com.willjiang.warthunderlive.UI;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
 
-import com.etsy.android.grid.StaggeredGridView;
 import com.willjiang.warthunderlive.Network.RequestMaker;
 import com.willjiang.warthunderlive.PostsAdapter;
 import com.willjiang.warthunderlive.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by Will on 9/3/15.
- */
 public class PostsFragment extends Fragment {
 
     private PostsAdapter mPostsAdapter;

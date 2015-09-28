@@ -14,12 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import it.gmariotti.cardslib.library.view.CardViewNative;
-import it.gmariotti.cardslib.library.view.helper.CardViewHelper;
-
-/**
- * Created by Will on 9/3/15.
- */
 public class PostsAdapter extends RecyclerView.Adapter {
 
     private Context context;

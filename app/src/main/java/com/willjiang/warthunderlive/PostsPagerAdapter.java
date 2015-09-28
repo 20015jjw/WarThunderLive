@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.util.SparseArrayCompat;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -13,14 +12,7 @@ import android.view.ViewGroup;
 import com.willjiang.warthunderlive.Network.RequestMaker;
 import com.willjiang.warthunderlive.UI.PostsFragment;
 
-import java.util.ArrayList;
-import java.util.Objects;
-
-/**
- * Created by Will on 9/7/15.
- */
 public class PostsPagerAdapter extends FragmentPagerAdapter {
-
     private Context mContext;
     private View rootView;
     private SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();

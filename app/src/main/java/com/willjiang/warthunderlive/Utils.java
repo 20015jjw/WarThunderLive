@@ -5,9 +5,6 @@ import android.text.format.DateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-/**
- * Created by Will on 9/24/15.
- */
 public class Utils {
 
     public static String getDate(long time) {

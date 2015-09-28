@@ -1,8 +1,5 @@
 package com.willjiang.warthunderlive.Network;
 
-/**
- * Created by will on 9/4/15.
- */
 public class API {
     // URLs
     public static final String baseURL = "http://live.warthunder.com/api";

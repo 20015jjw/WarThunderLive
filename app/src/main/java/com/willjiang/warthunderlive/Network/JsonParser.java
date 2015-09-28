@@ -3,12 +3,8 @@ package com.willjiang.warthunderlive.Network;
 import android.content.Context;
 import android.util.JsonReader;
 import android.util.JsonToken;
-import android.util.Log;
 
-import com.willjiang.warthunderlive.R;
 import com.willjiang.warthunderlive.Utils;
-
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,10 +12,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-/**
- * Created by Will on 9/1/15.
- */
 
 public class JsonParser {
 
