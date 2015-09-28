@@ -1,6 +1,9 @@
 package com.willjiang.warthunderlive.UI;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -8,6 +11,7 @@ import android.widget.TextView;
 
 import com.koushikdutta.ion.Ion;
 import com.willjiang.warthunderlive.Network.API;
+import com.willjiang.warthunderlive.PostDetailActivity;
 import com.willjiang.warthunderlive.R;
 
 import java.util.HashMap;
@@ -22,6 +26,9 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
     protected boolean hasThumbnail;
     protected String mTimestamp;
     protected HashMap<String, String> mAuthor;
+    protected String authorName;
+    protected String authorAvatarURL;
+    protected String authorID;
 
     public PostCardHolder(View card) {
         super(card);
@@ -29,12 +36,15 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
     }
 
     public void setupInnerViewElements() {
+        // clicker
+        card.setOnClickListener(this);
+
         // header
         LinearLayout author = (LinearLayout) card.findViewById(R.id.post_author_header);
         LinearLayout authorInfo = (LinearLayout) author.findViewById(R.id.post_author_header_info);
         TextView authorNickname = (TextView) authorInfo.findViewById(R.id.post_author_header_info_nickname);
         // author name
-        authorNickname.setText(this.mAuthor.get(API.author_nickname));
+        authorNickname.setText(authorName);
         // timestamp
         TextView TimeStamp = (TextView) authorInfo.findViewById(R.id.post_author_header_info_timestamp);
         TimeStamp.setText(mTimestamp);
@@ -43,7 +53,7 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         Ion.with(authorAvatar)
                 .placeholder(R.drawable.no_avatar)
                 .error(R.drawable.no_avatar)
-                .load(mAuthor.get(API.author_avatar));
+                .load(mAuthor.get(authorAvatarURL));
 
         // description
         TextView description = (TextView) card.findViewById(R.id.post_description);
@@ -80,13 +90,28 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     public void setAuthor (HashMap author) {
         this.mAuthor = author;
+        updateAuthorInfo();
+    }
+
+    private void updateAuthorInfo() {
+        this.authorAvatarURL = mAuthor.get(API.author_avatar);
+        this.authorName = mAuthor.get(API.author_nickname);
+//        this.authorID = mAuthor.get(API.author_id);
     }
 
     public void setTimestamp (String timestamp) {
         this.mTimestamp = timestamp;
     }
 
+    @Override
     public void onClick(View v) {
+        Context context = this.card.getContext();
+        Intent intent = new Intent(context, PostDetailActivity.class);
+        intent.putExtra(API.author_nickname, authorName);
+        intent.putExtra(API.author_avatar, authorAvatarURL);
+        intent.putExtra(API.timestamp, mTimestamp);
+        intent.putExtra(API.description, mDescription);
+        context.startActivity(intent);
     }
 
 }

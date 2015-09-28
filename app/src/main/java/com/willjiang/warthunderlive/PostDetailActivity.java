@@ -1,21 +1,57 @@
 package com.willjiang.warthunderlive;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.koushikdutta.ion.Ion;
 import com.willjiang.warthunderlive.Network.API;
 
 public class PostDetailActivity extends AppCompatActivity {
-
-    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
-        id = getIntent().getStringExtra(API.id);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = getIntent();
+
+        // author
+        String authorName = intent.getStringExtra(API.author_nickname);
+        TextView authorNickname = (TextView) findViewById(R.id.post_detail_author_header_info_nickname);
+        // author name
+        authorNickname.setText(authorName);
+        // timestamp
+        String timestamp = intent.getStringExtra(API.timestamp);
+        TextView TimeStamp = (TextView) findViewById(R.id.post_detail_author_header_info_timestamp);
+        TimeStamp.setText(timestamp);
+        // author avatar
+        String authorAvatarURL = intent.getStringExtra(API.author_avatar);
+        ImageView authorAvatar = (ImageView) findViewById(R.id.post_detail_author_header_avatar);
+        Ion.with(authorAvatar)
+                .placeholder(R.drawable.no_avatar)
+                .error(R.drawable.no_avatar)
+                .load(authorAvatarURL);
+
+        // description
+        String descriptionText = intent.getStringExtra(API.description);
+        TextView description = (TextView) findViewById(R.id.post_detail_description);
+        description.setText(descriptionText);
+
+        // thumbnail
+//        if (this.hasThumbnail) {
+//            ImageView thumbnail = (ImageView) card.findViewById(R.id.post_thumbnail);
+//            Ion.with(thumbnail)
+//                    .load(mThumbnailURL);
     }
 
 
