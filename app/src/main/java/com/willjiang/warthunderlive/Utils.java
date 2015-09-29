@@ -35,4 +35,15 @@ public class Utils {
             return left + right;
         }
     }
+
+    public static String toSummary(String str, int minLength) {
+        String summary;
+        if (str.length() > minLength + 10) {
+            int firstSpace = str.indexOf(" ", minLength);
+            summary = str.substring(0, firstSpace) + "...";
+        } else {
+            summary = str;
+        }
+        return summary;
+    }
 }
