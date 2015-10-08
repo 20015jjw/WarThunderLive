@@ -13,6 +13,7 @@ import com.koushikdutta.ion.Ion;
 import com.willjiang.warthunderlive.Network.API;
 import com.willjiang.warthunderlive.PostDetailActivity;
 import com.willjiang.warthunderlive.R;
+import com.willjiang.warthunderlive.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +63,8 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
 
         // description
         TextView description = (TextView) card.findViewById(R.id.post_description);
-        description.setText(mDescription);
+        String summary = Utils.toSummary(mDescription, 120);
+        description.setText(summary);
 
         // thumbnail
         if (this.hasThumbnail) {

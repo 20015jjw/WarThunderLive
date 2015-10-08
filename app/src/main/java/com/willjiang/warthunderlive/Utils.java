@@ -49,4 +49,15 @@ public class Utils {
             return left + right;
         }
     }
+
+    public static String toSummary(String str, int minLength) {
+        String summary = str;
+        if (str.length() > minLength + 10) {
+            int firstSpace = str.indexOf(" ", minLength);
+            if (firstSpace != -1) {
+                summary = str.substring(0, firstSpace) + "...";
+            }
+        }
+        return summary;
+    }
 }
