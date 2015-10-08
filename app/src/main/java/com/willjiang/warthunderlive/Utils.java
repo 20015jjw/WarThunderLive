@@ -1,6 +1,7 @@
 package com.willjiang.warthunderlive;
 
 import android.text.format.DateFormat;
+import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -21,7 +22,20 @@ public class Utils {
 
     // quality : 0 -> low; 1 -> medium; 2 -> original
     public static String imageQuality(String URL, int quality) {
-        int qualityPosition = 80;
+        int qualityPosition;
+        if (URL.startsWith("http")) {
+            qualityPosition = 80;
+        } else {
+            URL = "http://live.warthunder.com" + URL;
+            qualityPosition = 76;
+        }
+
+        if (URL.length() < qualityPosition) {
+                Log.e("Utils.imageQuality", "URL too short: " + URL);
+        } else {
+            Log.v("Utils.imageQuality", "URL good: " + URL);
+        }
+
         String left = URL.substring(0, qualityPosition);
         String right = URL.substring(qualityPosition);
         if (right.startsWith("_mq") || right.startsWith("_lq")) {

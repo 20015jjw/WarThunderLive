@@ -59,14 +59,16 @@ public class PostDetailActivity extends AppCompatActivity {
         ArrayList<String> imagesURLs = intent.getStringArrayListExtra(API.images);
         LinearLayout images = (LinearLayout) findViewById(R.id.post_detail_image_list);
         LayoutInflater inflater = getLayoutInflater();
-        for (String imagesURL : imagesURLs) {
-            ImageView image = (ImageView) inflater.inflate(R.layout.post_image_container, images, false);
-            images.addView(image);
-            if (imagesURL.length() > 80) {
-                imagesURL = Utils.imageQuality(imagesURL, 2);
+        if (imagesURLs != null) {
+            for (String imagesURL : imagesURLs) {
+                ImageView image = (ImageView) inflater.inflate(R.layout.post_image_container, images, false);
+                images.addView(image);
+                if (imagesURL.length() > 80) {
+                    imagesURL = Utils.imageQuality(imagesURL, 2);
+                }
+                Ion.with(image)
+                        .load(imagesURL);
             }
-            Ion.with(image)
-                .load(imagesURL);
         }
     }
 
