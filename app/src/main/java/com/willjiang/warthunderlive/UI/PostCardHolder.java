@@ -59,7 +59,7 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         Ion.with(authorAvatar)
                 .placeholder(R.drawable.no_avatar)
                 .error(R.drawable.no_avatar)
-                .load(mAuthor.get(authorAvatarURL));
+                .load(authorAvatarURL);
 
         // description
         TextView description = (TextView) card.findViewById(R.id.post_description);

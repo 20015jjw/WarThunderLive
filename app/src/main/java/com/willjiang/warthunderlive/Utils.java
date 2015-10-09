@@ -30,11 +30,11 @@ public class Utils {
             qualityPosition = 76;
         }
 
-        if (URL.length() < qualityPosition) {
-                Log.e("Utils.imageQuality", "URL too short: " + URL);
-        } else {
-            Log.v("Utils.imageQuality", "URL good: " + URL);
-        }
+//        if (URL.length() < qualityPosition) {
+//                Log.e("Utils.imageQuality", "URL too short: " + URL);
+//        } else {
+//            Log.v("Utils.imageQuality", "URL good: " + URL);
+//        }
 
         String left = URL.substring(0, qualityPosition);
         String right = URL.substring(qualityPosition);
