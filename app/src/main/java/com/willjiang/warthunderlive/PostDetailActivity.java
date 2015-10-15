@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -57,19 +59,21 @@ public class PostDetailActivity extends AppCompatActivity {
         description.setText(descriptionText);
 
         ArrayList<String> imagesURLs = intent.getStringArrayListExtra(API.images);
-        LinearLayout images = (LinearLayout) findViewById(R.id.post_detail_image_list);
-        LayoutInflater inflater = getLayoutInflater();
         if (imagesURLs != null) {
-            for (String imagesURL : imagesURLs) {
-                ImageView image = (ImageView) inflater.inflate(R.layout.post_image_container, images, false);
-                images.addView(image);
-                if (imagesURL.length() > 80) {
-                    imagesURL = Utils.imageQuality(imagesURL, 2);
-                }
-                Ion.with(image)
-                        .load(imagesURL);
-            }
+            String[] imagesURLsArray = imagesURLs.toArray(new String[imagesURLs.size()]);
+            GridView images = (GridView) findViewById(R.id.post_detail_image_list);
+            images.setNumColumns(imagesURLs.size() == 1 ? 1 : 2);
+
+            DetailImagesAdapter detailImagesAdapter =
+                    new DetailImagesAdapter(this, R.layout.detail_image_thumb, imagesURLsArray);
+
+            images.setAdapter(detailImagesAdapter);
         }
+//        if (imagesURLs != null) {
+//            for (String imagesURL : imagesURLs) {
+//                detailImagesAdapter.add(imagesURL);
+//            }
+//        }
     }
 
 

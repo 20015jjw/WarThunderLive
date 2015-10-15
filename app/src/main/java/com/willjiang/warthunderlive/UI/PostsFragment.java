@@ -56,7 +56,7 @@ public class PostsFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_posts, container, false);
 
         RecyclerView postsList = (RecyclerView) rootView.findViewById(R.id.posts_list);
-        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, 1);
+        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, 1);
         postsList.setLayoutManager(layoutManager);
         postsList.setAdapter(mPostsAdapter);
 
@@ -67,7 +67,7 @@ public class PostsFragment extends Fragment {
                 int totalItemCount = layoutManager.getChildCount();
                 int firstVisibleItem= layoutManager.findFirstVisibleItemPositions(null)[0];
 
-                if (firstVisibleItem >= load - 1) {
+                if (firstVisibleItem >= load - 2) {
                     load += 25;
                     increasePage(totalItemCount);
                 }
