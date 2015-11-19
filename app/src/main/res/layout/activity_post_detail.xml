@@ -65,18 +65,24 @@
                 <!--android:orientation="horizontal">-->
 
             <!--</LinearLayout>-->
-            <GridView
-                android:id="@+id/post_detail_image_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="2"
-                android:verticalSpacing="10dp"
-                android:horizontalSpacing="10dp"
-                android:stretchMode="columnWidth"
-                android:gravity="center">
+            <!--<GridView-->
+                <!--android:id="@+id/post_detail_image_list"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:numColumns="2"-->
+                <!--android:verticalSpacing="10dp"-->
+                <!--android:horizontalSpacing="10dp"-->
+                <!--android:stretchMode="columnWidth"-->
+                <!--android:gravity="center">-->
 
-            </GridView>
+            <!--</GridView>-->
         <!--</ScrollView>-->
+
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/post_detail_image_list"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+        />
 
         <TextView
             android:id="@+id/post_detail_description"

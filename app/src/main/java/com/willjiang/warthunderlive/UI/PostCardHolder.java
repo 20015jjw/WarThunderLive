@@ -2,6 +2,7 @@ package com.willjiang.warthunderlive.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -9,12 +10,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.koushikdutta.ion.Ion;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 import com.willjiang.warthunderlive.Network.API;
 import com.willjiang.warthunderlive.PostDetailActivity;
 import com.willjiang.warthunderlive.R;
 import com.willjiang.warthunderlive.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +27,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     protected View card;
+    protected Picasso picasso;
     protected String id;
     protected String language;
     protected String mDescription;
@@ -39,6 +43,8 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
     public PostCardHolder(View card) {
         super(card);
         this.card = card;
+        Picasso.Builder builder = new Picasso.Builder(this.card.getContext());
+        this.picasso = builder.build();
     }
 
     public void setupInnerViewElements() {
@@ -56,10 +62,10 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         TimeStamp.setText(mTimestamp);
         // author avatar
         ImageView authorAvatar = (ImageView) author.findViewById(R.id.post_author_header_avatar);
-        Ion.with(authorAvatar)
+
+        picasso.load(authorAvatarURL)
                 .placeholder(R.drawable.no_avatar)
-                .error(R.drawable.no_avatar)
-                .load(authorAvatarURL);
+                .into(authorAvatar);
 
         // description
         TextView description = (TextView) card.findViewById(R.id.post_description);
@@ -69,8 +75,10 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         // thumbnail
         if (this.hasThumbnail) {
             ImageView thumbnail = (ImageView) card.findViewById(R.id.post_thumbnail);
-            Ion.with(thumbnail)
-                    .load(mThumbnailURL);
+            picasso.load(mThumbnailURL)
+                    .fit()
+                    .placeholder(R.drawable.popup_white)
+                    .into(thumbnail);
         }
     }
 
