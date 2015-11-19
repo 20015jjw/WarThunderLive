@@ -53,12 +53,6 @@ public class PostsAdapter extends RecyclerView.Adapter {
         // description
         String rawText = (String) post.get(API.description);
         String parsedText = Html.fromHtml(rawText).toString();
-        if (parsedText.length() > 130) {
-            int firstSpace = parsedText.indexOf(" ", 120);
-            if (firstSpace != -1) {
-                parsedText = parsedText.substring(0, firstSpace) + "...";
-            }
-        }
         card.setDescription(parsedText);
 
         // thumbnail
