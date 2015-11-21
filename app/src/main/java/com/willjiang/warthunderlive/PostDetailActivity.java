@@ -47,12 +47,15 @@ public class PostDetailActivity extends AppCompatActivity {
         // author
         String authorName = intent.getStringExtra(API.author_nickname);
         TextView authorNickname = (TextView) findViewById(R.id.post_detail_author_header_info_nickname);
+
         // author name
         authorNickname.setText(authorName);
+
         // timestamp
         String timestamp = intent.getStringExtra(API.timestamp);
         TextView TimeStamp = (TextView) findViewById(R.id.post_detail_author_header_info_timestamp);
         TimeStamp.setText(timestamp);
+
         // author avatar
         String authorAvatarURL = intent.getStringExtra(API.author_avatar);
         ImageView authorAvatar = (ImageView) findViewById(R.id.post_detail_author_header_avatar);
@@ -70,7 +73,6 @@ public class PostDetailActivity extends AppCompatActivity {
             String[] imagesURLsArray = imagesURLs.toArray(new String[imagesURLs.size()]);
             SliderLayout images = (SliderLayout) findViewById(R.id.post_detail_image_list);
             for (String imageURL : imagesURLs) {
-//                Log.i("dddetail", imageURL);
                 DefaultSliderView imageSlider = new DefaultSliderView(this);
                 imageSlider.image(imageURL);
                 imageSlider.image(imageURL);
@@ -78,11 +80,6 @@ public class PostDetailActivity extends AppCompatActivity {
             }
 
         }
-//        if (imagesURLs != null) {
-//            for (String imagesURL : imagesURLs) {
-//                detailImagesAdapter.add(imagesURL);
-//            }
-//        }
     }
 
 

@@ -27,7 +27,8 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     protected View card;
-    protected Picasso picasso;
+    protected Picasso thumb_picasso;
+    protected Picasso avatar_picasso;
     protected String id;
     protected String language;
     protected String mDescription;
@@ -40,11 +41,13 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
     protected String authorID;
     protected ArrayList<String> images;
 
-    public PostCardHolder(View card) {
+    private boolean loading_ordered;
+
+    public PostCardHolder(View card, Picasso thumb_picasso, Picasso avatar_picasso) {
         super(card);
         this.card = card;
-        Picasso.Builder builder = new Picasso.Builder(this.card.getContext());
-        this.picasso = builder.build();
+        this.thumb_picasso = thumb_picasso;
+        this.avatar_picasso = avatar_picasso;
     }
 
     public void setupInnerViewElements() {
@@ -63,9 +66,7 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         // author avatar
         ImageView authorAvatar = (ImageView) author.findViewById(R.id.post_author_header_avatar);
 
-        picasso.load(authorAvatarURL)
-                .placeholder(R.drawable.no_avatar)
-                .into(authorAvatar);
+        Utils.loadImage(authorAvatar, authorAvatarURL, avatar_picasso);
 
         // description
         TextView description = (TextView) card.findViewById(R.id.post_description);
@@ -75,11 +76,12 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         // thumbnail
         if (this.hasThumbnail) {
             ImageView thumbnail = (ImageView) card.findViewById(R.id.post_thumbnail);
-            picasso.load(mThumbnailURL)
-                    .fit()
-                    .placeholder(R.drawable.popup_white)
-                    .into(thumbnail);
+
+            Utils.loadImage(thumbnail, mThumbnailURL, thumb_picasso);
+            Log.v("img_link", mThumbnailURL);
         }
+
+//        this.loading_ordered = true;
     }
 
     public void setDescription (String description) {

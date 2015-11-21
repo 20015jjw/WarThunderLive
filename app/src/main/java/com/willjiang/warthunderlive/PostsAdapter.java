@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Picasso;
 import com.willjiang.warthunderlive.Network.API;
 import com.willjiang.warthunderlive.UI.PostCardHolder;
 
@@ -19,10 +20,14 @@ public class PostsAdapter extends RecyclerView.Adapter {
 
     private Context context;
     private List posts;
+    protected Picasso thumb_picasso;
+    protected Picasso avatar_picasso;
 
     public PostsAdapter(Context context, List posts) {
         this.context = context;
         this.posts = posts;
+        this.thumb_picasso = new Picasso.Builder(context).build();
+        this.avatar_picasso = new Picasso.Builder(context).build();
     }
 
     public void addAll(List list) {
@@ -83,7 +88,7 @@ public class PostsAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View postCard = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_postcard, null);
-        PostCardHolder cardHolder = new PostCardHolder(postCard);
+        PostCardHolder cardHolder = new PostCardHolder(postCard, thumb_picasso, avatar_picasso);
         return cardHolder;
     }
 
