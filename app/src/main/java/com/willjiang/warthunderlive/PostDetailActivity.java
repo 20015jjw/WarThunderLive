@@ -3,32 +3,28 @@ package com.willjiang.warthunderlive;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.koushikdutta.ion.Ion;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.squareup.picasso.Picasso;
 import com.willjiang.warthunderlive.Network.API;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class PostDetailActivity extends AppCompatActivity {
+
+    Picasso picasso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
+        Picasso.Builder builder = new Picasso.Builder(this);
+        picasso = builder.build();
     }
 
     @Override
@@ -39,19 +35,21 @@ public class PostDetailActivity extends AppCompatActivity {
         // author
         String authorName = intent.getStringExtra(API.author_nickname);
         TextView authorNickname = (TextView) findViewById(R.id.post_detail_author_header_info_nickname);
+
         // author name
         authorNickname.setText(authorName);
+
         // timestamp
         String timestamp = intent.getStringExtra(API.timestamp);
         TextView TimeStamp = (TextView) findViewById(R.id.post_detail_author_header_info_timestamp);
         TimeStamp.setText(timestamp);
+
         // author avatar
         String authorAvatarURL = intent.getStringExtra(API.author_avatar);
         ImageView authorAvatar = (ImageView) findViewById(R.id.post_detail_author_header_avatar);
-        Ion.with(authorAvatar)
-                .placeholder(R.drawable.no_avatar)
-                .error(R.drawable.no_avatar)
-                .load(authorAvatarURL);
+        picasso.load(authorAvatarURL)
+               .placeholder(R.drawable.no_avatar)
+               .into(authorAvatar);
 
         // description
         String descriptionText = intent.getStringExtra(API.description);
@@ -61,19 +59,14 @@ public class PostDetailActivity extends AppCompatActivity {
         ArrayList<String> imagesURLs = intent.getStringArrayListExtra(API.images);
         if (imagesURLs != null) {
             String[] imagesURLsArray = imagesURLs.toArray(new String[imagesURLs.size()]);
-            GridView images = (GridView) findViewById(R.id.post_detail_image_list);
-            images.setNumColumns(imagesURLs.size() == 1 ? 1 : 2);
+            SliderLayout images = (SliderLayout) findViewById(R.id.post_detail_image_list);
+            for (String imageURL : imagesURLs) {
+                DefaultSliderView imageSlider = new DefaultSliderView(this);
+                imageSlider.image(imageURL);
+                images.addSlider(imageSlider);
+            }
 
-            DetailImagesAdapter detailImagesAdapter =
-                    new DetailImagesAdapter(this, R.layout.detail_image_thumb, imagesURLsArray);
-
-            images.setAdapter(detailImagesAdapter);
         }
-//        if (imagesURLs != null) {
-//            for (String imagesURL : imagesURLs) {
-//                detailImagesAdapter.add(imagesURL);
-//            }
-//        }
     }
 
 
@@ -97,5 +90,12 @@ public class PostDetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop() {
+        SliderLayout images = (SliderLayout) findViewById(R.id.post_detail_image_list);
+        images.stopAutoCycle();
+        super.onStop();
     }
 }

@@ -67,7 +67,8 @@ public class PostsFragment extends Fragment {
                 int totalItemCount = layoutManager.getChildCount();
                 int firstVisibleItem= layoutManager.findFirstVisibleItemPositions(null)[0];
 
-                if (firstVisibleItem >= load - 2) {
+                /* TODO: fix auto load threshold */
+                if (firstVisibleItem >= load - 5) {
                     load += 25;
                     increasePage(totalItemCount);
                 }
