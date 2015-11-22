@@ -2,6 +2,7 @@ package com.willjiang.warthunderlive;
 
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.util.SparseIntArray;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -66,8 +67,12 @@ public class Utils {
         return summary.trim();
     }
 
-    public static void loadImage(final ImageView view, final String imgURL, final Picasso picasso) {
-        view.getViewTreeObserver()
+    public static void loadImage(final ImageView view, final String imgURL, final Picasso picasso,
+                                 final SparseIntArray sizes, final int key) {
+
+        int result = sizes.get(key, -10);
+        if (result == -10) {
+            view.getViewTreeObserver()
                 .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     // Wait until layout to call Picasso
                     @Override
@@ -75,13 +80,20 @@ public class Utils {
                         // Ensure we call this only once
                         view.getViewTreeObserver()
                                 .removeOnGlobalLayoutListener(this);
-                        Log.v("loader", imgURL);
+                        sizes.put(key, view.getWidth());
 
                         picasso
-                                .load(imgURL)
-                                .resize(view.getWidth(), 0)
-                                .into(view);
+                            .load(imgURL)
+                            .resize(view.getWidth(), 0)
+                            .into(view);
                     }
                 });
+        }
+        else {
+            picasso
+                .load(imgURL)
+                .resize(sizes.get(key), 0)
+                .into(view);
+        }
     }
 }

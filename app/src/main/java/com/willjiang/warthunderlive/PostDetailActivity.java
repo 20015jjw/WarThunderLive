@@ -3,29 +3,17 @@ package com.willjiang.warthunderlive;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.squareup.picasso.Picasso;
 import com.willjiang.warthunderlive.Network.API;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class PostDetailActivity extends AppCompatActivity {
 
@@ -74,7 +62,6 @@ public class PostDetailActivity extends AppCompatActivity {
             SliderLayout images = (SliderLayout) findViewById(R.id.post_detail_image_list);
             for (String imageURL : imagesURLs) {
                 DefaultSliderView imageSlider = new DefaultSliderView(this);
-                imageSlider.image(imageURL);
                 imageSlider.image(imageURL);
                 images.addSlider(imageSlider);
             }
