@@ -62,22 +62,31 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.period_switch) {
-            onSwitch();
+            onSwitch(item);
+        }
+        else if (id == R.id.refresh) {
+            onRefresh();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void onSwitch() {
+    private void onSwitch(MenuItem item) {
         int curPeriod = mPostsPagerAdapter.getPeriod();
         if (curPeriod == 7) {
             curPeriod = 30;
-            Log.v("switch", "" + curPeriod);
+            item.setTitle(Integer.toString(curPeriod));
         } else if (curPeriod == 30) {
             curPeriod = 0;
+            item.setTitle("∞");
         } else if (curPeriod == 0) {
             curPeriod = 7;
+            item.setTitle(Integer.toString(curPeriod));
         }
         mPostsPagerAdapter.setPeriod(curPeriod);
+    }
+
+    private void onRefresh() {
+        mPostsPagerAdapter.refresh();
     }
 }

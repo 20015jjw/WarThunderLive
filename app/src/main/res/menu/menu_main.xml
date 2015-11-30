@@ -3,7 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item
         android:id="@+id/period_switch"
-        android:title="test"
+        android:title="∞"
         android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/refresh"
+        android:title="refresh"
+        android:orderInCategory="50"
         app:showAsAction="ifRoom" />
 </menu>

@@ -92,4 +92,8 @@ public class PostsPagerAdapter extends FragmentPagerAdapter {
         return this.period;
     }
 
+    public void refresh() {
+        setPeriod(getPeriod());
+    }
+
 }
