@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        Toolbar toobar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toobar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         mPostsPager = (ViewPager) findViewById(R.id.posts_pager);
         mPostsPagerAdapter = new PostsPagerAdapter(this.findViewById(R.id.main),
