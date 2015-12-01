@@ -34,7 +34,7 @@
                 android:id="@+id/post_author_header_info"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="8"
+                android:layout_weight="2"
                 android:orientation="vertical">
 
                 <TextView
