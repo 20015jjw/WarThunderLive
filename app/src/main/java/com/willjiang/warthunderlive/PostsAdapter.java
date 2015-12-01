@@ -23,6 +23,9 @@ public class PostsAdapter extends RecyclerView.Adapter {
     protected Picasso thumb_picasso;
     protected Picasso avatar_picasso;
 
+    public static final int thumbnailKey = 1;
+    public static final int avatarKey = 2;
+
     public PostsAdapter(Context context, List posts) {
         this.context = context;
         this.posts = posts;

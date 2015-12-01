@@ -3,12 +3,16 @@ package com.willjiang.warthunderlive;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.squareup.picasso.Picasso;
 import com.willjiang.warthunderlive.Network.API;
@@ -58,11 +62,19 @@ public class PostDetailActivity extends AppCompatActivity {
 
         ArrayList<String> imagesURLs = intent.getStringArrayListExtra(API.images);
         if (imagesURLs != null) {
-            String[] imagesURLsArray = imagesURLs.toArray(new String[imagesURLs.size()]);
+            ViewGroup.LayoutParams prams = findViewById(R.id.post_detail_image_list_wrapper).getLayoutParams();
+            prams.height = intent.getIntExtra("size", 500);
+
             SliderLayout images = (SliderLayout) findViewById(R.id.post_detail_image_list);
+            images.stopAutoCycle();
+            if (imagesURLs.size() < 2) {
+                images.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
+            }
+
             for (String imageURL : imagesURLs) {
                 DefaultSliderView imageSlider = new DefaultSliderView(this);
                 imageSlider.image(imageURL);
+                imageSlider.setScaleType(BaseSliderView.ScaleType.CenterInside);
                 images.addSlider(imageSlider);
             }
 
@@ -92,10 +104,4 @@ public class PostDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onStop() {
-        SliderLayout images = (SliderLayout) findViewById(R.id.post_detail_image_list);
-        images.stopAutoCycle();
-        super.onStop();
-    }
 }

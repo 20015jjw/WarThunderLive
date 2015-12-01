@@ -8,6 +8,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -35,12 +36,6 @@ public class Utils {
             URL = "http://live.warthunder.com" + URL;
             qualityPosition = 76;
         }
-
-//        if (URL.length() < qualityPosition) {
-//                Log.e("Utils.imageQuality", "URL too short: " + URL);
-//        } else {
-//            Log.v("Utils.imageQuality", "URL good: " + URL);
-//        }
 
         String left = URL.substring(0, qualityPosition);
         String right = URL.substring(qualityPosition);
@@ -70,30 +65,51 @@ public class Utils {
     public static void loadImage(final ImageView view, final String imgURL, final Picasso picasso,
                                  final SparseIntArray sizes, final int key) {
 
-        int result = sizes.get(key, -10);
-        if (result == -10) {
-            view.getViewTreeObserver()
-                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    // Wait until layout to call Picasso
-                    @Override
-                    public void onGlobalLayout() {
-                        // Ensure we call this only once
-                        view.getViewTreeObserver()
-                                .removeOnGlobalLayoutListener(this);
-                        sizes.put(key, view.getWidth());
+        final int anOrganicRandomNumber = -76590;
 
-                        picasso
-                            .load(imgURL)
-                            .resize(view.getWidth(), 0)
-                            .into(view);
-                    }
-                });
+        int height = sizes.get(key, anOrganicRandomNumber);
+
+        int placeHolder = 0;
+        if (key == PostsAdapter.thumbnailKey) {
+            placeHolder = R.drawable.bf109;
+
+        } else if (key == PostsAdapter.avatarKey) {
+            placeHolder = R.drawable.no_avatar;
+        }
+
+        if (height == anOrganicRandomNumber) {
+            if (key == PostsAdapter.thumbnailKey) {
+                view.getViewTreeObserver()
+                        .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                            // Wait until layout to call Picasso
+                            @Override
+                            public void onGlobalLayout() {
+                                view.getViewTreeObserver()
+                                        .removeOnGlobalLayoutListener(this);
+                                sizes.put(key, view.getWidth());
+                                loadImage(view, imgURL, picasso, sizes, key);
+                            }
+                        });
+            } else if (key == PostsAdapter.avatarKey) {
+                 view.getViewTreeObserver()
+                        .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                            // Wait until layout to call Picasso
+                            @Override
+                            public void onGlobalLayout() {
+                                view.getViewTreeObserver()
+                                        .removeOnGlobalLayoutListener(this);
+                                sizes.put(key, view.getHeight());
+                                Log.v("height", Integer.toString(view.getHeight()));
+                                loadImage(view, imgURL, picasso, sizes, key);
+                            }
+                        });
+            }
         }
         else {
-            picasso
-                .load(imgURL)
-                .resize(sizes.get(key), 0)
-                .into(view);
+            RequestCreator req = picasso.load(imgURL)
+                                        .placeholder(placeHolder);
+            req.resize(sizes.get(key), 0)
+                    .into(view);
         }
     }
 }

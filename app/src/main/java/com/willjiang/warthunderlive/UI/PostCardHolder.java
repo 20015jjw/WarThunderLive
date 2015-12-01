@@ -3,6 +3,7 @@ package com.willjiang.warthunderlive.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.willjiang.warthunderlive.Network.API;
 import com.willjiang.warthunderlive.PostDetailActivity;
+import com.willjiang.warthunderlive.PostsAdapter;
 import com.willjiang.warthunderlive.R;
 import com.willjiang.warthunderlive.Utils;
 
@@ -71,10 +73,8 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         // thumbnail
         if (this.hasThumbnail) {
             ImageView thumbnail = (ImageView) card.findViewById(R.id.post_thumbnail);
-            Utils.loadImage(thumbnail, mThumbnailURL, thumb_picasso, sizes, 1);
+            Utils.loadImage(thumbnail, mThumbnailURL, thumb_picasso, sizes, PostsAdapter.thumbnailKey);
         }
-
-//        this.loading_ordered = true;
     }
 
     public void setDescription (String description) {
@@ -110,7 +110,6 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
     private void updateAuthorInfo() {
         this.authorAvatarURL = mAuthor.get(API.author_avatar);
         this.authorName = mAuthor.get(API.author_nickname);
-//        this.authorID = mAuthor.get(API.author_id);
     }
 
     public void setTimestamp (String timestamp) {
@@ -126,6 +125,10 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         intent.putExtra(API.timestamp, mTimestamp);
         intent.putExtra(API.description, mDescription);
         intent.putStringArrayListExtra(API.images, images);
+
+        intent.putExtra("height", sizes.get(-1, 500));
+        Log.v("height", Integer.toString(sizes.get(-1, 213)));
+
         context.startActivity(intent);
     }
 
