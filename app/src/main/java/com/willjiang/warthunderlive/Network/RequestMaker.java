@@ -63,8 +63,6 @@ public class RequestMaker extends AsyncTask<Bundle , Void, String> {
                     .post(postBody)
                     .build();
 
-//        } else if (type.equals("post")) {
-
         } else {
 
             String id = String.valueOf(args.getInt("id"));
