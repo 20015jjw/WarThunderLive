@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/post_detail_author_header"
             android:layout_width="match_parent"
@@ -53,36 +54,18 @@
 
         </LinearLayout>
 
-        <!--<ScrollView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<LinearLayout-->
-                <!--android:id="@+id/post_detail_image_list"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal">-->
-
-            <!--</LinearLayout>-->
-            <!--<GridView-->
-                <!--android:id="@+id/post_detail_image_list"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:numColumns="2"-->
-                <!--android:verticalSpacing="10dp"-->
-                <!--android:horizontalSpacing="10dp"-->
-                <!--android:stretchMode="columnWidth"-->
-                <!--android:gravity="center">-->
-
-            <!--</GridView>-->
-        <!--</ScrollView>-->
-
-        <com.daimajia.slider.library.SliderLayout
-            android:id="@+id/post_detail_image_list"
+        <LinearLayout
+            android:id="@+id/post_detail_image_list_wrapper"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-        />
+            android:layout_height="0dp">
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/post_detail_image_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+            />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/post_detail_description"
