@@ -1,5 +1,6 @@
 package com.willjiang.warthunderlive;
 
+import android.graphics.Color;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.SparseIntArray;
@@ -7,8 +8,10 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+import com.squareup.picasso.Transformation;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -99,7 +102,6 @@ public class Utils {
                                 view.getViewTreeObserver()
                                         .removeOnGlobalLayoutListener(this);
                                 sizes.put(key, view.getHeight());
-                                Log.v("height", Integer.toString(view.getHeight()));
                                 loadImage(view, imgURL, picasso, sizes, key);
                             }
                         });
@@ -108,8 +110,19 @@ public class Utils {
         else {
             RequestCreator req = picasso.load(imgURL)
                                         .placeholder(placeHolder);
-            req.resize(sizes.get(key), 0)
-                    .into(view);
+            if (key == PostsAdapter.thumbnailKey) {
+                req.resize(sizes.get(key), 0)
+                        .into(view);
+            } else if (key == PostsAdapter.avatarKey) {
+                Transformation transformation = new RoundedTransformationBuilder()
+                        .borderColor(Color.TRANSPARENT)
+                        .cornerRadiusDp(30)
+                        .oval(true)
+                        .build();
+
+                req.transform(transformation).into(view);
+            }
+
         }
     }
 }

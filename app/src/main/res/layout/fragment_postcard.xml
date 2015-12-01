@@ -30,6 +30,7 @@
             android:adjustViewBounds="true"
             android:layout_marginRight="10dp" />
 
+
             <LinearLayout
                 android:id="@+id/post_author_header_info"
                 android:layout_width="0dp"
