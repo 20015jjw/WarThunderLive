@@ -18,6 +18,7 @@ import java.util.Locale;
 
 public class Utils {
 
+
     public static String getDate(long time) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time);
@@ -64,6 +65,13 @@ public class Utils {
         }
         return summary.trim();
     }
+
+    public static final Transformation round_transformation =
+            new RoundedTransformationBuilder()
+            .borderColor(Color.TRANSPARENT)
+            .cornerRadiusDp(30)
+            .oval(true)
+            .build();
 
     public static void loadImage(final ImageView view, final String imgURL, final Picasso picasso,
                                  final SparseIntArray sizes, final int key) {
@@ -114,13 +122,7 @@ public class Utils {
                 req.resize(sizes.get(key), 0)
                         .into(view);
             } else if (key == PostsAdapter.avatarKey) {
-                Transformation transformation = new RoundedTransformationBuilder()
-                        .borderColor(Color.TRANSPARENT)
-                        .cornerRadiusDp(30)
-                        .oval(true)
-                        .build();
-
-                req.transform(transformation).into(view);
+                req.transform(round_transformation).into(view);
             }
 
         }
