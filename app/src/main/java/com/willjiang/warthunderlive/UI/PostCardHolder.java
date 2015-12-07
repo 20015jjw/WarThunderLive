@@ -73,6 +73,7 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         // thumbnail
         if (this.hasThumbnail) {
             ImageView thumbnail = (ImageView) card.findViewById(R.id.post_thumbnail);
+            mThumbnailURL = Utils.imageQuality(mThumbnailURL, 0);
             Utils.loadImage(thumbnail, mThumbnailURL, thumb_picasso, sizes, PostsAdapter.thumbnailKey);
         }
     }

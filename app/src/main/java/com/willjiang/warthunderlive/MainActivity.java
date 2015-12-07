@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mPostsPager = (ViewPager) findViewById(R.id.posts_pager);
+        mPostsPager.setOffscreenPageLimit(1);
         mPostsPagerAdapter = new PostsPagerAdapter(this.findViewById(R.id.main),
                 getSupportFragmentManager(), this, 0);
         mPostsPager.setAdapter(mPostsPagerAdapter);
