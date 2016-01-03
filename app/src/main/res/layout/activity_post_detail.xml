@@ -54,7 +54,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <com.willjiang.warthunderlive.UI.SquareLinearLayout
             android:id="@+id/post_detail_image_list_wrapper"
             android:layout_width="match_parent"
             android:layout_height="0dp">
@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
             />
-        </LinearLayout>
+        </com.willjiang.warthunderlive.UI.SquareLinearLayout>
 
         <TextView
             android:id="@+id/post_detail_description"

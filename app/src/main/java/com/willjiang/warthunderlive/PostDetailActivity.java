@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.Indicators.PagerIndicator;
@@ -29,6 +30,9 @@ public class PostDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_detail);
         Picasso.Builder builder = new Picasso.Builder(this);
         picasso = builder.build();
+
+        LinearLayout wrapper = (LinearLayout) findViewById(R.id.post_detail_image_list_wrapper);
+
     }
 
     @Override
