@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,6 +65,8 @@ public class PostDetailActivity extends AppCompatActivity {
         Spanned descriptionText = (Spanned) intent.getExtras().get(API.description);
         TextView description = (TextView) findViewById(R.id.post_detail_description);
         description.setText(descriptionText);
+        description.setLinksClickable(true);
+        description.setMovementMethod(LinkMovementMethod.getInstance());
 
         ArrayList<String> imagesURLs = intent.getStringArrayListExtra(API.images);
         if (imagesURLs != null) {
