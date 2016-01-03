@@ -3,6 +3,7 @@ package com.willjiang.warthunderlive;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -60,15 +61,12 @@ public class PostDetailActivity extends AppCompatActivity {
                .into(authorAvatar);
 
         // description
-        String descriptionText = intent.getStringExtra(API.description);
+        Spanned descriptionText = (Spanned) intent.getExtras().get(API.description);
         TextView description = (TextView) findViewById(R.id.post_detail_description);
         description.setText(descriptionText);
 
         ArrayList<String> imagesURLs = intent.getStringArrayListExtra(API.images);
         if (imagesURLs != null) {
-            ViewGroup.LayoutParams prams = findViewById(R.id.post_detail_image_list_wrapper).getLayoutParams();
-            prams.height = intent.getIntExtra("size", 500);
-
             SliderLayout images = (SliderLayout) findViewById(R.id.post_detail_image_list);
             images.stopAutoCycle();
             if (imagesURLs.size() < 2) {

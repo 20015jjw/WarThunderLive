@@ -1,6 +1,7 @@
 package com.willjiang.warthunderlive;
 
 import android.graphics.Color;
+import android.text.Spanned;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.SparseIntArray;
@@ -59,12 +60,13 @@ public class Utils {
         }
     }
 
-    public static String toSummary(String str, int minLength) {
-        String summary = str;
-        if (str.length() > minLength + 10) {
-            int firstSpace = str.indexOf(" ", minLength);
+    public static String toSummary(Spanned str, int minLength) {
+        String copy = str.toString();
+        String summary = str.toString();
+        if (copy.length() > minLength + 10) {
+            int firstSpace = copy.indexOf(" ", minLength);
             if (firstSpace != -1) {
-                summary = str.substring(0, firstSpace) + "...";
+                summary = copy.substring(0, firstSpace) + "...";
             }
         }
         return summary.trim();

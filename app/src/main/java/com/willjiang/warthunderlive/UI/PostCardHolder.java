@@ -3,6 +3,7 @@ package com.willjiang.warthunderlive.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spanned;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.View;
@@ -27,7 +28,7 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
     protected Picasso avatar_picasso;
     protected String id;
     protected String language;
-    protected String mDescription;
+    protected Spanned mDescription;
     protected String mThumbnailURL;
     protected boolean hasThumbnail;
     protected String mTimestamp;
@@ -78,11 +79,12 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         }
     }
 
-    public void setDescription (String description) {
+    public void setDescription (Spanned description) {
         this.mDescription = description;
     }
 
-    public String getDescription () {
+
+    public Spanned getDescription () {
         return mDescription;
     }
 

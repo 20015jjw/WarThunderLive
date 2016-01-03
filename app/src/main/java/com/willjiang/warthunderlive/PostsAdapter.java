@@ -3,6 +3,7 @@ package com.willjiang.warthunderlive;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +61,7 @@ public class PostsAdapter extends RecyclerView.Adapter {
 
         // description
         String rawText = (String) post.get(API.description);
-        String parsedText = Html.fromHtml(rawText).toString();
+        Spanned parsedText = Html.fromHtml(rawText);
         card.setDescription(parsedText);
 
         // thumbnail
