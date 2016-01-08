@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
+        /* only called when a fragment for that position does not exist */
         savedInstanceState.putInt("currentPage", mPostsPager.getCurrentItem());
         super.onSaveInstanceState(savedInstanceState);
     }

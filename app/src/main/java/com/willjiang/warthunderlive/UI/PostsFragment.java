@@ -53,8 +53,9 @@ public class PostsFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_posts, container, false);
+        super.onCreateView(inflater, container, savedInstanceState);
 
+        rootView = inflater.inflate(R.layout.fragment_posts, container, false);
         RecyclerView postsList = (RecyclerView) rootView.findViewById(R.id.posts_list);
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, 1);
         postsList.setLayoutManager(layoutManager);

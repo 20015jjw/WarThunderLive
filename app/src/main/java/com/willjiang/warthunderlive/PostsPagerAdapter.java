@@ -34,6 +34,7 @@ public class PostsPagerAdapter extends FragmentPagerAdapter {
         return 8;
     }
 
+    /* only called when a fragment for that position does not exist */
     @Override
     public Fragment getItem(int index) {
         switch (index) {

@@ -63,7 +63,6 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         TimeStamp.setText(mTimestamp);
         // author avatar
         ImageView authorAvatar = (ImageView) author.findViewById(R.id.post_author_header_avatar);
-
         Utils.loadImage(authorAvatar, authorAvatarURL, avatar_picasso, sizes, 2);
 
         // description
@@ -82,7 +81,6 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
     public void setDescription (Spanned description) {
         this.mDescription = description;
     }
-
 
     public Spanned getDescription () {
         return mDescription;

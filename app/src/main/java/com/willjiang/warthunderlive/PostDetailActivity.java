@@ -32,9 +32,6 @@ public class PostDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_detail);
         Picasso.Builder builder = new Picasso.Builder(this);
         picasso = builder.build();
-
-        LinearLayout wrapper = (LinearLayout) findViewById(R.id.post_detail_image_list_wrapper);
-
     }
 
     @Override
@@ -57,6 +54,7 @@ public class PostDetailActivity extends AppCompatActivity {
         // author avatar
         String authorAvatarURL = intent.getStringExtra(API.author_avatar);
         ImageView authorAvatar = (ImageView) findViewById(R.id.post_detail_author_header_avatar);
+//         Utils.loadImage(authorAvatar, authorAvatarURL, picasso, null, PostsAdapter.avatarKey);
         picasso.load(authorAvatarURL)
                .placeholder(R.drawable.no_avatar)
                .into(authorAvatar);
@@ -96,12 +94,8 @@ public class PostDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
