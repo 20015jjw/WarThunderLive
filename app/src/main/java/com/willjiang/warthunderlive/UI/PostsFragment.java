@@ -27,8 +27,6 @@ public class PostsFragment extends Fragment {
     private int load;
 
     public static PostsFragment newInstance(int index, String catalog, int period) {
-        // it generates new fragments whenever it returns to Mainactivity...
-        Log.v("postsFrag", "new item");
         PostsFragment postsFragment = new PostsFragment();
 
         postsFragment.curPage = 0;
@@ -68,7 +66,6 @@ public class PostsFragment extends Fragment {
                 int totalItemCount = layoutManager.getChildCount();
                 int firstVisibleItem= layoutManager.findFirstVisibleItemPositions(null)[0];
 
-                /* TODO: fix auto load threshold */
                 if (firstVisibleItem >= load - 5) {
                     load += 25;
                     increasePage(totalItemCount);

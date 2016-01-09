@@ -7,6 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:scrollbars="none"
     tools:context="com.willjiang.warthunderlive.PostDetailActivity">
 
 
@@ -57,7 +58,9 @@
         <com.willjiang.warthunderlive.UI.SquareLinearLayout
             android:id="@+id/post_detail_image_list_wrapper"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp">
 
             <com.daimajia.slider.library.SliderLayout
                 android:id="@+id/post_detail_image_list"

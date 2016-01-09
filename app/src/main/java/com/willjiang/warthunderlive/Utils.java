@@ -126,14 +126,14 @@ public class Utils {
             RequestCreator req = picasso.load(imgURL)
                                         .placeholder(placeHolder);
             if (key == PostsAdapter.thumbnailKey) {
-                req.memoryPolicy(MemoryPolicy.NO_CACHE)
-                        .networkPolicy(NetworkPolicy.NO_CACHE)
-                        .resize(sizes.get(key), 0)
+                req.resize(sizes.get(key), 0)
+//                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+//                        .networkPolicy(NetworkPolicy.NO_CACHE)
                         .into(view);
             } else if (key == PostsAdapter.avatarKey) {
                 req.resize(0, sizes.get(key))
-                        .memoryPolicy(MemoryPolicy.NO_CACHE)
-                        .networkPolicy(NetworkPolicy.NO_CACHE)
+//                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+//                        .networkPolicy(NetworkPolicy.NO_CACHE)
                         .transform(round_transformation)
                         .into(view);
             }
