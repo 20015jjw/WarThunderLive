@@ -82,10 +82,7 @@ public class Utils {
 
     public static void loadImage(final ImageView view, final String imgURL, final Picasso picasso,
                                  final SparseIntArray sizes, final int key) {
-
         final int anOrganicRandomNumber = -76590;
-
-        int height = sizes.get(key, anOrganicRandomNumber);
 
         int placeHolder = 0;
         if (key == PostsAdapter.thumbnailKey) {
@@ -95,6 +92,12 @@ public class Utils {
             placeHolder = R.drawable.no_avatar;
         }
 
+        if (picasso == null) {
+            Picasso.with(view.getContext()).load(imgURL).fit().into(view);
+            return;
+        }
+
+        int height = sizes.get(key, anOrganicRandomNumber);
         if (height == anOrganicRandomNumber) {
             if (key == PostsAdapter.thumbnailKey) {
                 view.getViewTreeObserver()

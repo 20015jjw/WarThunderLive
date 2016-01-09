@@ -33,6 +33,7 @@ public class API {
     public static final String images = "images";
     public static final String image_src = "src";
 
+    public static final String video_src= "video_src";
     public static final String video_info = "video_info";
     public static final String video_type = "image";
     public static final String video_image_src = "image";

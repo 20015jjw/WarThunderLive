@@ -38,6 +38,7 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
     protected String authorAvatarURL;
     protected String authorID;
     protected ArrayList<String> images;
+    protected boolean is_video;
 
     private SparseIntArray sizes;
 
@@ -118,6 +119,10 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         this.mTimestamp = timestamp;
     }
 
+    public void setIs_video(boolean is_video) {
+        this.is_video = is_video;
+    }
+
     @Override
     public void onClick(View v) {
         Context context = this.card.getContext();
@@ -127,9 +132,9 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         intent.putExtra(API.timestamp, mTimestamp);
         intent.putExtra(API.description, mDescription);
         intent.putStringArrayListExtra(API.images, images);
-
-        intent.putExtra("height", sizes.get(-1, 500));
-        Log.v("height", Integer.toString(sizes.get(-1, 213)));
+        if (is_video) {
+            intent.putExtra(API.video_src, mThumbnailURL);
+        }
 
         context.startActivity(intent);
     }

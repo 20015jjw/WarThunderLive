@@ -1,7 +1,9 @@
 package com.willjiang.warthunderlive;
 
 import android.app.ActionBar;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Spanned;
@@ -13,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -63,10 +66,7 @@ public class PostDetailActivity extends AppCompatActivity {
         String authorAvatarURL = intent.getStringExtra(API.author_avatar);
         ImageView authorAvatar = (ImageView) findViewById(R.id.post_author_header_avatar);
         setHeight(authorAvatar, getResources().getDimensionPixelSize(R.dimen.detail_avatar_height));
-         Utils.loadImage(authorAvatar, authorAvatarURL, picasso, this.size, PostsAdapter.avatarKey);
-//        picasso.load(authorAvatarURL)
-//               .placeholder(R.drawable.no_avatar)
-//               .into(authorAvatar);
+        Utils.loadImage(authorAvatar, authorAvatarURL, picasso, this.size, PostsAdapter.avatarKey);
 
         // description
         Spanned descriptionText = (Spanned) intent.getExtras().get(API.description);
@@ -75,6 +75,7 @@ public class PostDetailActivity extends AppCompatActivity {
         description.setLinksClickable(true);
         description.setMovementMethod(LinkMovementMethod.getInstance());
 
+        // thumbs
         ArrayList<String> imagesURLs = intent.getStringArrayListExtra(API.images);
         if (imagesURLs != null) {
             SliderLayout images = (SliderLayout) findViewById(R.id.post_detail_image_list);
@@ -89,7 +90,36 @@ public class PostDetailActivity extends AppCompatActivity {
                 imageSlider.setScaleType(BaseSliderView.ScaleType.CenterInside);
                 images.addSlider(imageSlider);
             }
+        }
 
+        // video
+        final String video_src = intent.getStringExtra(API.video_src);
+        if (video_src == null) {
+        } else {
+            LinearLayout wrapper = (LinearLayout) findViewById(R.id.post_detail_wrapper);
+            wrapper.removeView(findViewById(R.id.post_detail_image_list_wrapper));
+
+            if (wrapper.findViewById(R.id.post_detail_video_preview) != null) {
+                return;
+            }
+
+            FrameLayout img_wrapper =
+                    (FrameLayout) getLayoutInflater().inflate(R.layout.video_preview_img, null);
+
+            View.OnClickListener listener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse(toVideoSrc(video_src))));
+                }
+            };
+
+            wrapper.setOnClickListener(listener);
+
+            ImageView preview = (ImageView) img_wrapper.findViewById(R.id.post_detail_video_preview);
+
+            Picasso.with(this).load(toHQimg(video_src)).into(preview);
+            wrapper.addView(img_wrapper, 1);
         }
     }
 
@@ -116,5 +146,14 @@ public class PostDetailActivity extends AppCompatActivity {
         ViewGroup.LayoutParams prams = view.getLayoutParams();
         prams.height = height;
         view.setLayoutParams(prams);
+    }
+
+    private String toVideoSrc(String img_src) {
+        return "http://www.youtube.com/watch?v=" +
+                img_src.substring(23, img_src.length() - 14);
+    }
+
+    private String toHQimg(String img_src) {
+        return img_src.replaceFirst("mqdefault", "hqdefault");
     }
 }

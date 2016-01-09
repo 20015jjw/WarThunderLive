@@ -74,6 +74,7 @@ public class PostsAdapter extends RecyclerView.Adapter {
         }
         if (video_image_src != null) {
             card.setThumbnailURL(video_image_src);
+            card.setIs_video(true);
         }
 
         // author
