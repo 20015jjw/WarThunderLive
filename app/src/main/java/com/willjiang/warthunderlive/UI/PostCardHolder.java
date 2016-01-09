@@ -9,6 +9,7 @@ import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -53,7 +54,7 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         card.setOnClickListener(this);
 
         // header
-        LinearLayout author = (LinearLayout) card.findViewById(R.id.post_author_header);
+        RelativeLayout author = (RelativeLayout) card.findViewById(R.id.post_author_header);
         LinearLayout authorInfo = (LinearLayout) author.findViewById(R.id.post_author_header_info);
         TextView authorNickname = (TextView) authorInfo.findViewById(R.id.post_author_header_info_nickname);
         // author name

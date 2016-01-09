@@ -1,13 +1,17 @@
 package com.willjiang.warthunderlive;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +29,7 @@ import java.util.ArrayList;
 public class PostDetailActivity extends AppCompatActivity {
 
     Picasso picasso;
+    SparseIntArray size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,7 @@ public class PostDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_detail);
         Picasso.Builder builder = new Picasso.Builder(this);
         picasso = builder.build();
+        size = new SparseIntArray(2);
     }
 
     @Override
@@ -39,25 +45,28 @@ public class PostDetailActivity extends AppCompatActivity {
         super.onStart();
         Intent intent = getIntent();
 
-        // author
-        String authorName = intent.getStringExtra(API.author_nickname);
-        TextView authorNickname = (TextView) findViewById(R.id.post_detail_author_header_info_nickname);
-
         // author name
+        String authorName = intent.getStringExtra(API.author_nickname);
+        TextView authorNickname = (TextView) findViewById(R.id.post_author_header_info_nickname);
+        authorNickname.setTextSize(getResources().getDimension(R.dimen.detail_font_size));
+        setHeight(authorNickname, getResources().getDimensionPixelSize(R.dimen.detail_tv_height));
         authorNickname.setText(authorName);
 
         // timestamp
-        String timestamp = intent.getStringExtra(API.timestamp);
-        TextView TimeStamp = (TextView) findViewById(R.id.post_detail_author_header_info_timestamp);
-        TimeStamp.setText(timestamp);
+        String timestamp_str = intent.getStringExtra(API.timestamp);
+        TextView timestamp = (TextView) findViewById(R.id.post_author_header_info_timestamp);
+        timestamp.setTextSize(getResources().getDimension(R.dimen.detail_font_size));
+        setHeight(timestamp, getResources().getDimensionPixelSize(R.dimen.detail_tv_height));
+        timestamp.setText(timestamp_str);
 
         // author avatar
         String authorAvatarURL = intent.getStringExtra(API.author_avatar);
-        ImageView authorAvatar = (ImageView) findViewById(R.id.post_detail_author_header_avatar);
-//         Utils.loadImage(authorAvatar, authorAvatarURL, picasso, null, PostsAdapter.avatarKey);
-        picasso.load(authorAvatarURL)
-               .placeholder(R.drawable.no_avatar)
-               .into(authorAvatar);
+        ImageView authorAvatar = (ImageView) findViewById(R.id.post_author_header_avatar);
+        setHeight(authorAvatar, getResources().getDimensionPixelSize(R.dimen.detail_avatar_height));
+         Utils.loadImage(authorAvatar, authorAvatarURL, picasso, this.size, PostsAdapter.avatarKey);
+//        picasso.load(authorAvatarURL)
+//               .placeholder(R.drawable.no_avatar)
+//               .into(authorAvatar);
 
         // description
         Spanned descriptionText = (Spanned) intent.getExtras().get(API.description);
@@ -103,4 +112,9 @@ public class PostDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void setHeight(View view, int height) {
+        ViewGroup.LayoutParams prams = view.getLayoutParams();
+        prams.height = height;
+        view.setLayoutParams(prams);
+    }
 }
