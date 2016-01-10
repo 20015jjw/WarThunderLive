@@ -101,4 +101,9 @@ public class PostsAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return posts.size();
     }
+
+    @Override
+    public void onViewRecycled (RecyclerView.ViewHolder viewHolder) {
+        ((PostCardHolder) viewHolder).unloadInnerViewItems();
+    }
 }

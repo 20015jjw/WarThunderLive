@@ -40,6 +40,9 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
     protected ArrayList<String> images;
     protected boolean is_video;
 
+    private ImageView authorAvatar;
+    private ImageView thumbnail;
+
     private SparseIntArray sizes;
 
     public PostCardHolder(View card, Picasso thumb_picasso, Picasso avatar_picasso) {
@@ -64,7 +67,7 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         TextView TimeStamp = (TextView) authorInfo.findViewById(R.id.post_author_header_info_timestamp);
         TimeStamp.setText(mTimestamp);
         // author avatar
-        ImageView authorAvatar = (ImageView) author.findViewById(R.id.post_author_header_avatar);
+        authorAvatar = (ImageView) author.findViewById(R.id.post_author_header_avatar);
         Utils.loadImage(authorAvatar, authorAvatarURL, avatar_picasso, sizes, 2);
 
         // description
@@ -74,10 +77,18 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
 
         // thumbnail
         if (this.hasThumbnail) {
-            ImageView thumbnail = (ImageView) card.findViewById(R.id.post_thumbnail);
+            thumbnail = (ImageView) card.findViewById(R.id.post_thumbnail);
             mThumbnailURL = Utils.imageQuality(mThumbnailURL, 0);
             Utils.loadImage(thumbnail, mThumbnailURL, thumb_picasso, sizes, PostsAdapter.thumbnailKey);
         }
+    }
+
+    public void unloadInnerViewItems() {
+        thumb_picasso.cancelRequest(thumbnail);
+        avatar_picasso.cancelRequest(authorAvatar);
+
+        thumb_picasso.invalidate(mThumbnailURL);
+        avatar_picasso.invalidate(authorAvatarURL);
     }
 
     public void setDescription (Spanned description) {

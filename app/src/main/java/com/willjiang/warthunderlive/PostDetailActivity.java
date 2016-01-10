@@ -117,7 +117,6 @@ public class PostDetailActivity extends AppCompatActivity {
             wrapper.setOnClickListener(listener);
 
             ImageView preview = (ImageView) img_wrapper.findViewById(R.id.post_detail_video_preview);
-
             Picasso.with(this).load(toHQimg(video_src)).into(preview);
             wrapper.addView(img_wrapper, 1);
         }
