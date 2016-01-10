@@ -5,13 +5,10 @@ import android.text.Spanned;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.SparseIntArray;
-import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Transformation;
@@ -130,13 +127,9 @@ public class Utils {
                                         .placeholder(placeHolder);
             if (key == PostsAdapter.thumbnailKey) {
                 req.resize(sizes.get(key), 0)
-//                        .memoryPolicy(MemoryPolicy.NO_CACHE)
-//                        .networkPolicy(NetworkPolicy.NO_CACHE)
                         .into(view);
             } else if (key == PostsAdapter.avatarKey) {
                 req.resize(0, sizes.get(key))
-//                        .memoryPolicy(MemoryPolicy.NO_CACHE)
-//                        .networkPolicy(NetworkPolicy.NO_CACHE)
                         .transform(round_transformation)
                         .into(view);
             }
