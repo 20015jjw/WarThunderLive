@@ -23,6 +23,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.squareup.picasso.Picasso;
 import com.willjiang.warthunderlive.Network.API;
+import com.willjiang.warthunderlive.UI.CustomImageSliderView;
 
 import java.util.ArrayList;
 
@@ -82,8 +83,14 @@ public class PostDetailActivity extends AppCompatActivity {
             }
 
             for (String imageURL : imagesURLs) {
-                DefaultSliderView imageSlider = new DefaultSliderView(this);
+                final CustomImageSliderView imageSlider = new CustomImageSliderView(this);
                 imageSlider.image(imageURL);
+                imageSlider.setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                    @Override
+                    public void onSliderClick(BaseSliderView slider) {
+                        Log.v("slider", slider.getUrl());
+                    }
+                });
                 imageSlider.setScaleType(BaseSliderView.ScaleType.CenterInside);
                 images.addSlider(imageSlider);
             }
