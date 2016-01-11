@@ -39,21 +39,21 @@ public class PostsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int index) {
         switch (index) {
             case 0:
-                return PostsFragment.newInstance(0, "All", period);
+                return PostsFragment.newInstance(index, "All", period, index);
             case 1:
-                return PostsFragment.newInstance(1, "Images", period);
+                return PostsFragment.newInstance(index, "Images", period, index);
             case 2:
-                return PostsFragment.newInstance(2, "Videos", period);
+                return PostsFragment.newInstance(index, "Videos", period, index);
             case 3:
-                return PostsFragment.newInstance(3, "Quotes", period);
+                return PostsFragment.newInstance(index, "Quotes", period, index);
             case 4:
-                return PostsFragment.newInstance(5, "Camos", period);
+                return PostsFragment.newInstance(index, "Camos", period, index);
             case 5:
-                return PostsFragment.newInstance(6, "Missions", period);
+                return PostsFragment.newInstance(index, "Missions", period, index);
             case 6:
-                return PostsFragment.newInstance(7, "Locations", period);
+                return PostsFragment.newInstance(index, "Locations", period, index);
             case 7:
-                return PostsFragment.newInstance(8, "Models", period);
+                return PostsFragment.newInstance(index, "Models", period, index);
             default:
                 return null;
         }

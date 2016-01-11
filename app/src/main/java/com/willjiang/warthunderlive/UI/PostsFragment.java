@@ -26,7 +26,9 @@ public class PostsFragment extends Fragment {
 
     private int load;
 
-    public static PostsFragment newInstance(int index, String catalog, int period) {
+    private int tag;
+
+    public static PostsFragment newInstance(int index, String catalog, int period, int tag) {
         PostsFragment postsFragment = new PostsFragment();
 
         postsFragment.curPage = 0;
@@ -46,7 +48,7 @@ public class PostsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         posts = new ArrayList();
-        mPostsAdapter = new PostsAdapter(getActivity(), posts);
+        mPostsAdapter = new PostsAdapter(getActivity(), posts, tag);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +56,7 @@ public class PostsFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         rootView = inflater.inflate(R.layout.fragment_posts, container, false);
-        RecyclerView postsList = (RecyclerView) rootView.findViewById(R.id.posts_list);
+        final RecyclerView postsList = (RecyclerView) rootView.findViewById(R.id.posts_list);
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, 1);
         postsList.setLayoutManager(layoutManager);
         postsList.setAdapter(mPostsAdapter);
@@ -71,7 +73,19 @@ public class PostsFragment extends Fragment {
                     increasePage(totalItemCount);
                 }
             }
+
+            @Override
+            public void onScrollStateChanged(final RecyclerView recyclerView,
+                                             final int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    mPostsAdapter.resumeAll();
+                } else {
+                    mPostsAdapter.pauseAll();
+                }
+            }
         });
+
+
 
         request();
         return rootView;

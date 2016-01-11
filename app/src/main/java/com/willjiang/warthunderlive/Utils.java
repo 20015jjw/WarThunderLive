@@ -78,7 +78,7 @@ public class Utils {
             .build();
 
     public static void loadImage(final ImageView view, final String imgURL, final Picasso picasso,
-                                 final SparseIntArray sizes, final int key) {
+                                 final SparseIntArray sizes, final int key, final Object tag) {
         final int anOrganicRandomNumber = -76590;
 
         int placeHolder = 0;
@@ -90,7 +90,7 @@ public class Utils {
         }
 
         if (picasso == null) {
-            Picasso.with(view.getContext()).load(imgURL).fit().into(view);
+            Picasso.with(view.getContext()).load(imgURL).into(view);
             return;
         }
 
@@ -125,6 +125,11 @@ public class Utils {
         else {
             RequestCreator req = picasso.load(imgURL)
                                         .placeholder(placeHolder);
+
+            if (tag != null) {
+                req = req.tag(tag);
+            }
+
             if (key == PostsAdapter.thumbnailKey) {
                 req.resize(sizes.get(key), 0)
                         .into(view);
@@ -135,5 +140,14 @@ public class Utils {
             }
 
         }
+    }
+
+    public static void loadImage(final ImageView view, final String imgURL) {
+        loadImage(view, imgURL, null, null, 0);
+    }
+
+    public static void loadImage(final ImageView view, final String imgURL, final Picasso picasso,
+                         final SparseIntArray sizes, final int key) {
+        loadImage(view, imgURL, picasso, sizes, key, null);
     }
 }

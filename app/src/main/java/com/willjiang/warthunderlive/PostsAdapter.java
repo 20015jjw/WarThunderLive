@@ -23,15 +23,17 @@ public class PostsAdapter extends RecyclerView.Adapter {
     private List posts;
     protected Picasso thumb_picasso;
     protected Picasso avatar_picasso;
+    protected int tag;
 
     public static final int thumbnailKey = 1;
     public static final int avatarKey = 2;
 
-    public PostsAdapter(Context context, List posts) {
+    public PostsAdapter(Context context, List posts, int tag) {
         this.context = context;
         this.posts = posts;
         this.thumb_picasso = new Picasso.Builder(context).build();
         this.avatar_picasso = new Picasso.Builder(context).build();
+        this.tag = tag;
     }
 
     public void addAll(List list) {
@@ -93,7 +95,7 @@ public class PostsAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View postCard = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_postcard, null);
-        PostCardHolder cardHolder = new PostCardHolder(postCard, thumb_picasso, avatar_picasso);
+        PostCardHolder cardHolder = new PostCardHolder(postCard, thumb_picasso, avatar_picasso, tag);
         return cardHolder;
     }
 
@@ -105,5 +107,15 @@ public class PostsAdapter extends RecyclerView.Adapter {
     @Override
     public void onViewRecycled (RecyclerView.ViewHolder viewHolder) {
         ((PostCardHolder) viewHolder).unloadInnerViewItems();
+    }
+
+    public void pauseAll() {
+        avatar_picasso.pauseTag(tag);
+        thumb_picasso.pauseTag(tag);
+    }
+
+    public void resumeAll() {
+        avatar_picasso.resumeTag(tag);
+        thumb_picasso.resumeTag(tag);
     }
 }

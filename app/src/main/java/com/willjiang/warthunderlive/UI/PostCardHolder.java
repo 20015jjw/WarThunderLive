@@ -27,6 +27,7 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
     protected View card;
     protected Picasso thumb_picasso;
     protected Picasso avatar_picasso;
+    protected int tag;
     protected String id;
     protected String language;
     protected Spanned mDescription;
@@ -45,7 +46,7 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     private SparseIntArray sizes;
 
-    public PostCardHolder(View card, Picasso thumb_picasso, Picasso avatar_picasso) {
+    public PostCardHolder(View card, Picasso thumb_picasso, Picasso avatar_picasso, int tag) {
         super(card);
         this.card = card;
         this.thumb_picasso = thumb_picasso;
@@ -68,7 +69,8 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         TimeStamp.setText(mTimestamp);
         // author avatar
         authorAvatar = (ImageView) author.findViewById(R.id.post_author_header_avatar);
-        Utils.loadImage(authorAvatar, authorAvatarURL, avatar_picasso, sizes, 2);
+        Utils.loadImage(authorAvatar, authorAvatarURL,
+                avatar_picasso, sizes, PostsAdapter.avatarKey, tag);
 
         // description
         TextView description = (TextView) card.findViewById(R.id.post_description);
@@ -79,7 +81,8 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         if (this.hasThumbnail) {
             thumbnail = (ImageView) card.findViewById(R.id.post_thumbnail);
             mThumbnailURL = Utils.imageQuality(mThumbnailURL, 0);
-            Utils.loadImage(thumbnail, mThumbnailURL, thumb_picasso, sizes, PostsAdapter.thumbnailKey);
+            Utils.loadImage(thumbnail, mThumbnailURL, thumb_picasso,
+                    sizes, PostsAdapter.thumbnailKey, tag);
         }
     }
 
