@@ -1,5 +1,6 @@
 package com.willjiang.warthunderlive;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.text.Spanned;
 import android.text.format.DateFormat;
@@ -20,6 +21,10 @@ public class Utils {
 
 
     public static String getDate(long time) {
+        if (time < 1000000000000L) {
+            // if timestamp given in seconds, convert to millis
+            time *= 1000;
+        }
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time);
         String date = DateFormat.format("LLLL dd, yyyy HH:mm", cal).toString();
@@ -35,6 +40,7 @@ public class Utils {
     public static String imageQuality(String URL, int quality) {
         int qualityPosition;
         if (URL.length() < 76) {
+            Log.i("imageQuality", "Malformed image link: " + URL);
             return URL;
         }
         if (URL.startsWith("http")) {
@@ -149,5 +155,58 @@ public class Utils {
     public static void loadImage(final ImageView view, final String imgURL, final Picasso picasso,
                          final SparseIntArray sizes, final int key) {
         loadImage(view, imgURL, picasso, sizes, key, null);
+    }
+
+    /*
+     * Copyright 2012 Google Inc.
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *      http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+
+    private static final int SECOND_MILLIS = 1000;
+    private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
+    private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
+    private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
+
+
+    public static String getTimeAgo(long time) {
+        if (time < 1000000000000L) {
+            // if timestamp given in seconds, convert to millis
+            time *= 1000;
+        }
+
+        long now = System.currentTimeMillis();
+        if (time > now || time <= 0) {
+            return null;
+        }
+
+        final long diff = now - time;
+        if (diff < MINUTE_MILLIS) {
+            return "just now";
+        } else if (diff < 2 * MINUTE_MILLIS) {
+            return "a minute ago";
+        } else if (diff < 50 * MINUTE_MILLIS) {
+            return diff / MINUTE_MILLIS + " minutes ago";
+        } else if (diff < 90 * MINUTE_MILLIS) {
+            return "an hour ago";
+        } else if (diff < DAY_MILLIS) {
+            return diff / HOUR_MILLIS + " hours ago";
+        } else if (diff < 2 * DAY_MILLIS) {
+            return "yesterday";
+        } else if (diff / 366 < DAY_MILLIS){
+            return diff / DAY_MILLIS + " days ago";
+        } else {
+            return "over a year ago";
+        }
     }
 }

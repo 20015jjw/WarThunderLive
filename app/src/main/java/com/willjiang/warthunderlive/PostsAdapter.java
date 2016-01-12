@@ -85,8 +85,7 @@ public class PostsAdapter extends RecyclerView.Adapter {
 
         // timestamp
         String rawTimestamp = (String) post.get(API.timestamp);
-        String timestamp = Utils.getDate(Long.valueOf(rawTimestamp) * 1000);
-        card.setTimestamp(timestamp);
+        card.setTimestamp(rawTimestamp);
 
         card.setupInnerViewElements();
     }

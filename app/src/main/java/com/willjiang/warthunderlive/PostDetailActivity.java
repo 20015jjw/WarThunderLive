@@ -58,7 +58,7 @@ public class PostDetailActivity extends AppCompatActivity {
         TextView timestamp = (TextView) findViewById(R.id.post_author_header_info_timestamp);
         timestamp.setTextSize(getResources().getDimension(R.dimen.detail_font_size));
         setHeight(timestamp, getResources().getDimensionPixelSize(R.dimen.detail_tv_height));
-        timestamp.setText(timestamp_str);
+        timestamp.setText(Utils.getDate(Long.valueOf(timestamp_str)));
 
         // author avatar
         String authorAvatarURL = intent.getStringExtra(API.author_avatar);
@@ -120,7 +120,6 @@ public class PostDetailActivity extends AppCompatActivity {
             wrapper.setOnClickListener(listener);
 
             ImageView preview = (ImageView) img_wrapper.findViewById(R.id.post_detail_video_preview);
-//            Picasso.with(this).load(toHQimg(video_src)).into(preview);
             Utils.loadImage(preview, toHQimg(video_src));
             wrapper.addView(img_wrapper, 1);
         }

@@ -62,11 +62,15 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         RelativeLayout author = (RelativeLayout) card.findViewById(R.id.post_author_header);
         LinearLayout authorInfo = (LinearLayout) author.findViewById(R.id.post_author_header_info);
         TextView authorNickname = (TextView) authorInfo.findViewById(R.id.post_author_header_info_nickname);
+
         // author name
         authorNickname.setText(authorName);
+
         // timestamp
         TextView TimeStamp = (TextView) authorInfo.findViewById(R.id.post_author_header_info_timestamp);
-        TimeStamp.setText(mTimestamp);
+        String timestamp = Utils.getTimeAgo(Long.valueOf(mTimestamp) * 1000);
+        TimeStamp.setText(timestamp);
+
         // author avatar
         authorAvatar = (ImageView) author.findViewById(R.id.post_author_header_avatar);
         Utils.loadImage(authorAvatar, authorAvatarURL,
@@ -81,7 +85,7 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         if (this.hasThumbnail) {
             thumbnail = (ImageView) card.findViewById(R.id.post_thumbnail);
             mThumbnailURL = Utils.imageQuality(mThumbnailURL, 0);
-            Utils.loadImage(thumbnail, mThumbnailURL, thumb_picasso,
+            Utils.loadImage(thumbnail, Utils.imageQuality(mThumbnailURL, 0), thumb_picasso,
                     sizes, PostsAdapter.thumbnailKey, tag);
         }
     }
