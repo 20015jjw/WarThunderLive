@@ -47,13 +47,13 @@ public class PostsPagerAdapter extends FragmentPagerAdapter {
             case 3:
                 return PostsFragment.newInstance(index, "Quotes", period, index);
             case 4:
-                return PostsFragment.newInstance(index, "Camos", period, index);
+                return PostsFragment.newInstance(index + 1, "Camos", period, index);
             case 5:
-                return PostsFragment.newInstance(index, "Missions", period, index);
+                return PostsFragment.newInstance(index + 1, "Missions", period, index);
             case 6:
-                return PostsFragment.newInstance(index, "Locations", period, index);
+                return PostsFragment.newInstance(index + 1, "Locations", period, index);
             case 7:
-                return PostsFragment.newInstance(index, "Models", period, index);
+                return PostsFragment.newInstance(index + 1, "Models", period, index);
             default:
                 return null;
         }
