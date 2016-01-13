@@ -91,11 +91,12 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
     }
 
     public void unloadInnerViewItems() {
-        thumb_picasso.cancelRequest(thumbnail);
         avatar_picasso.cancelRequest(authorAvatar);
-
-        thumb_picasso.invalidate(mThumbnailURL);
         avatar_picasso.invalidate(authorAvatarURL);
+        if (mThumbnailURL != null) {
+            thumb_picasso.cancelRequest(thumbnail);
+            thumb_picasso.invalidate(mThumbnailURL);
+        }
     }
 
     public void setDescription (Spanned description) {

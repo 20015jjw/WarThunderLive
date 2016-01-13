@@ -40,7 +40,8 @@ public class Utils {
     public static String imageQuality(String URL, int quality) {
         int qualityPosition;
         if (URL.length() < 76) {
-            Log.i("imageQuality", "Malformed image link: " + URL);
+            if (!URL.contains("ytimg"))
+                Log.i("imageQuality", "Malformed image link: " + URL);
             return URL;
         }
         if (URL.startsWith("http")) {
