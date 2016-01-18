@@ -1,4 +1,4 @@
-package com.willjiang.warthunderlive;
+package com.willjiang.warthunderlive.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,29 +11,32 @@ import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
 import com.willjiang.warthunderlive.Network.API;
+import com.willjiang.warthunderlive.R;
 import com.willjiang.warthunderlive.UI.PostCardHolder;
+import com.willjiang.warthunderlive.WTLApplication;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter {
 
-    private Context context;
+    private Context mContext;
     private List posts;
-    protected Picasso thumb_picasso;
-    protected Picasso avatar_picasso;
+    private Picasso mPicasso;
     protected int tag;
+    private List<PostCardHolder> holders;
 
     public static final int thumbnailKey = 1;
     public static final int avatarKey = 2;
 
-    public PostsAdapter(Context context, List posts, int tag) {
-        this.context = context;
+    public PostsAdapter(WTLApplication application, List posts, int tag) {
+        this.mContext = application;
         this.posts = posts;
-        this.thumb_picasso = new Picasso.Builder(context).build();
-        this.avatar_picasso = new Picasso.Builder(context).build();
+        this.mPicasso = application.getPicasso();
         this.tag = tag;
+        this.holders = new LinkedList<PostCardHolder>();
     }
 
     public void addAll(List list) {
@@ -94,7 +97,8 @@ public class PostsAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View postCard = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_postcard, null);
-        PostCardHolder cardHolder = new PostCardHolder(postCard, thumb_picasso, avatar_picasso, tag);
+        PostCardHolder cardHolder = new PostCardHolder(postCard, mPicasso, tag);
+        holders.add(cardHolder);
         return cardHolder;
     }
 
@@ -109,12 +113,19 @@ public class PostsAdapter extends RecyclerView.Adapter {
     }
 
     public void pauseAll() {
-        avatar_picasso.pauseTag(tag);
-        thumb_picasso.pauseTag(tag);
+        mPicasso.pauseTag(tag);
     }
 
     public void resumeAll() {
-        avatar_picasso.resumeTag(tag);
-        thumb_picasso.resumeTag(tag);
+        mPicasso.resumeTag(tag);
+    }
+
+    public void stopAll() {
+        mPicasso.cancelTag(tag);
+        mPicasso.cancelTag(tag);
+        for (PostCardHolder h : holders) {
+            h.unloadInnerViewItems();
+        }
+        holders.clear();
     }
 }

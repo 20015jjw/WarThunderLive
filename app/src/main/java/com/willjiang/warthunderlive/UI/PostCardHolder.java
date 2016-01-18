@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spanned;
-import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.willjiang.warthunderlive.Network.API;
 import com.willjiang.warthunderlive.PostDetailActivity;
-import com.willjiang.warthunderlive.PostsAdapter;
+import com.willjiang.warthunderlive.Adapter.PostsAdapter;
 import com.willjiang.warthunderlive.R;
 import com.willjiang.warthunderlive.Utils;
 
@@ -24,10 +23,9 @@ import java.util.HashMap;
 
 public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    protected View card;
-    protected Picasso thumb_picasso;
-    protected Picasso avatar_picasso;
-    protected int tag;
+    protected View mCard;
+    protected Picasso mPicasso;
+    protected int mTag;
     protected String id;
     protected String language;
     protected Spanned mDescription;
@@ -46,20 +44,20 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     private SparseIntArray sizes;
 
-    public PostCardHolder(View card, Picasso thumb_picasso, Picasso avatar_picasso, int tag) {
+    public PostCardHolder(View card, Picasso picasso, int tag) {
         super(card);
-        this.card = card;
-        this.thumb_picasso = thumb_picasso;
-        this.avatar_picasso = avatar_picasso;
+        this.mPicasso = picasso;
+        this.mCard = card;
         this.sizes = new SparseIntArray(5);
+        this.mTag = tag;
     }
 
     public void setupInnerViewElements() {
         // clicker
-        card.setOnClickListener(this);
+        mCard.setOnClickListener(this);
 
         // header
-        RelativeLayout author = (RelativeLayout) card.findViewById(R.id.post_author_header);
+        RelativeLayout author = (RelativeLayout) mCard.findViewById(R.id.post_author_header);
         LinearLayout authorInfo = (LinearLayout) author.findViewById(R.id.post_author_header_info);
         TextView authorNickname = (TextView) authorInfo.findViewById(R.id.post_author_header_info_nickname);
 
@@ -74,29 +72,38 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
         // author avatar
         authorAvatar = (ImageView) author.findViewById(R.id.post_author_header_avatar);
         Utils.loadImage(authorAvatar, authorAvatarURL,
-                avatar_picasso, sizes, PostsAdapter.avatarKey, tag);
+                mPicasso, sizes, PostsAdapter.avatarKey, mTag);
 
         // description
-        TextView description = (TextView) card.findViewById(R.id.post_description);
+        TextView description = (TextView) mCard.findViewById(R.id.post_description);
         String summary = Utils.toSummary(mDescription, 120);
         description.setText(summary);
 
         // thumbnail
         if (this.hasThumbnail) {
-            thumbnail = (ImageView) card.findViewById(R.id.post_thumbnail);
+            thumbnail = (ImageView) mCard.findViewById(R.id.post_thumbnail);
             mThumbnailURL = Utils.imageQuality(mThumbnailURL, 0);
-            Utils.loadImage(thumbnail, Utils.imageQuality(mThumbnailURL, 0), thumb_picasso,
-                    sizes, PostsAdapter.thumbnailKey, tag);
+            Utils.loadImage(thumbnail, Utils.imageQuality(mThumbnailURL, 0), mPicasso,
+                    sizes, PostsAdapter.thumbnailKey, mTag);
         }
     }
 
     public void unloadInnerViewItems() {
-        avatar_picasso.cancelRequest(authorAvatar);
-        avatar_picasso.invalidate(authorAvatarURL);
+        mPicasso.cancelRequest(authorAvatar);
+        mPicasso.invalidate(authorAvatarURL);
+        authorAvatar.setImageDrawable(null);
         if (mThumbnailURL != null) {
-            thumb_picasso.cancelRequest(thumbnail);
-            thumb_picasso.invalidate(mThumbnailURL);
+            mPicasso.cancelRequest(thumbnail);
+            mPicasso.invalidate(mThumbnailURL);
+            thumbnail.setImageDrawable(null);
         }
+        RelativeLayout author = (RelativeLayout) mCard.findViewById(R.id.post_author_header);
+        TextView authorNickname = (TextView) author.findViewById(R.id.post_author_header_info_nickname);
+        authorNickname.setText(null);
+        TextView TimeStamp = (TextView) author.findViewById(R.id.post_author_header_info_timestamp);
+        TimeStamp.setText(null);
+        TextView description = (TextView) mCard.findViewById(R.id.post_description);
+        description.setText(null);
     }
 
     public void setDescription (Spanned description) {
@@ -144,7 +151,7 @@ public class PostCardHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        Context context = this.card.getContext();
+        Context context = this.mCard.getContext();
         Intent intent = new Intent(context, PostDetailActivity.class);
         intent.putExtra(API.author_nickname, authorName);
         intent.putExtra(API.author_avatar, authorAvatarURL);

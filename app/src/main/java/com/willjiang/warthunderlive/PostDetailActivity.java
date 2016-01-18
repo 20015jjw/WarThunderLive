@@ -20,8 +20,8 @@ import android.widget.TextView;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.squareup.picasso.Picasso;
+import com.willjiang.warthunderlive.Adapter.PostsAdapter;
 import com.willjiang.warthunderlive.Network.API;
 import com.willjiang.warthunderlive.UI.CustomImageSliderView;
 
@@ -64,7 +64,8 @@ public class PostDetailActivity extends AppCompatActivity {
         String authorAvatarURL = intent.getStringExtra(API.author_avatar);
         ImageView authorAvatar = (ImageView) findViewById(R.id.post_author_header_avatar);
         setHeight(authorAvatar, getResources().getDimensionPixelSize(R.dimen.detail_avatar_height));
-        Utils.loadImage(authorAvatar, authorAvatarURL, picasso, this.size, PostsAdapter.avatarKey);
+        Utils.loadImage(authorAvatar, authorAvatarURL, picasso, this.size,
+                PostsAdapter.avatarKey, null);
 
         // description
         Spanned descriptionText = (Spanned) intent.getExtras().get(API.description);

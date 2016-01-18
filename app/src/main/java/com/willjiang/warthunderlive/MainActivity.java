@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-// import com.squareup.leakcanary.LeakCanary;
+import com.willjiang.warthunderlive.Adapter.PostsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        LeakCanary.install(getApplication());
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -28,8 +27,16 @@ public class MainActivity extends AppCompatActivity {
         mPostsPager = (ViewPager) findViewById(R.id.posts_pager);
         mPostsPager.setOffscreenPageLimit(1);
         mPostsPagerAdapter = new PostsPagerAdapter(this.findViewById(R.id.main),
-                getSupportFragmentManager(), this, 0);
+                getSupportFragmentManager(), this, 0, mPostsPager);
         mPostsPager.setAdapter(mPostsPagerAdapter);
+
+        mPostsPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                Log.v("main", Integer.toString(position));
+                mPostsPagerAdapter.refreshView(position);
+            }
+        });
 
         TabLayout PostsHeader = (TabLayout) findViewById(R.id.posts_pager_header);
         PostsHeader.setupWithViewPager(mPostsPager);
@@ -94,4 +101,5 @@ public class MainActivity extends AppCompatActivity {
     private void onRefresh() {
         mPostsPagerAdapter.refresh();
     }
+
 }

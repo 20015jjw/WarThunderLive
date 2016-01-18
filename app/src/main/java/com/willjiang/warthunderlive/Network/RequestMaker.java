@@ -11,7 +11,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
-import com.willjiang.warthunderlive.PostsAdapter;
+import com.willjiang.warthunderlive.Adapter.PostsAdapter;
 import com.willjiang.warthunderlive.R;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class RequestMaker extends AsyncTask<Bundle , Void, String> {
 
         if (type.equals("feed")) {
 
-            String content = String.valueOf(args.getInt("index"));
+            String content = String.valueOf(args.getInt("content"));
             String page = String.valueOf(args.getInt("page"));
             String period = String.valueOf(args.getInt("period"));
 

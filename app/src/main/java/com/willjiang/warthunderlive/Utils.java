@@ -1,6 +1,5 @@
 package com.willjiang.warthunderlive;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.text.Spanned;
 import android.text.format.DateFormat;
@@ -13,8 +12,11 @@ import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Transformation;
+import com.willjiang.warthunderlive.Adapter.PostsAdapter;
 
+import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class Utils {
@@ -36,7 +38,10 @@ public class Utils {
     }
 
 
-    // quality : 0 -> low; 1 -> medium; 2 -> original
+    public static final int image_quality_orig = 2;
+    public static final int image_quality_med = 1;
+    public static final int image_quality_low = 0;
+
     public static String imageQuality(String URL, int quality) {
         int qualityPosition;
         if (URL.length() < 76) {
@@ -56,9 +61,9 @@ public class Utils {
         if (right.startsWith("_mq") || right.startsWith("_lq")) {
             right = right.substring(3);
         }
-        if (quality == 0) {
+        if (quality == image_quality_low) {
             return left + "_lq" + right;
-        } else if (quality == 1) {
+        } else if (quality == image_quality_med) {
             return left + "_mq" + right;
         } else {
             return left + right;
@@ -94,6 +99,8 @@ public class Utils {
 
         } else if (key == PostsAdapter.avatarKey) {
             placeHolder = R.drawable.no_avatar;
+        } else {
+            throw new IllegalArgumentException("image type undefined: " + Integer.toString(key));
         }
 
         if (picasso == null) {
@@ -112,7 +119,7 @@ public class Utils {
                                 view.getViewTreeObserver()
                                         .removeOnGlobalLayoutListener(this);
                                 sizes.put(key, view.getWidth());
-                                loadImage(view, imgURL, picasso, sizes, key);
+                                loadImage(view, imgURL, picasso, sizes, key, tag);
                             }
                         });
             } else if (key == PostsAdapter.avatarKey) {
@@ -124,7 +131,7 @@ public class Utils {
                                 view.getViewTreeObserver()
                                         .removeOnGlobalLayoutListener(this);
                                 sizes.put(key, view.getHeight());
-                                loadImage(view, imgURL, picasso, sizes, key);
+                                loadImage(view, imgURL, picasso, sizes, key, tag);
                             }
                         });
             }
@@ -150,12 +157,7 @@ public class Utils {
     }
 
     public static void loadImage(final ImageView view, final String imgURL) {
-        loadImage(view, imgURL, null, null, 0);
-    }
-
-    public static void loadImage(final ImageView view, final String imgURL, final Picasso picasso,
-                         final SparseIntArray sizes, final int key) {
-        loadImage(view, imgURL, picasso, sizes, key, null);
+        loadImage(view, imgURL, null, null, 0, null);
     }
 
     /*
@@ -208,6 +210,18 @@ public class Utils {
             return diff / DAY_MILLIS + " days ago";
         } else {
             return "over a year ago";
+        }
+    }
+
+    public static class ListHelper implements Serializable {
+        private List list;
+
+        public ListHelper (List list) {
+            this.list = list;
+        }
+
+        public List getList() {
+            return list;
         }
     }
 }
