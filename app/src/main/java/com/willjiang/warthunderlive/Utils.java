@@ -93,7 +93,12 @@ public class Utils {
                                  final SparseIntArray sizes, final int key, final Object tag) {
         final int anOrganicRandomNumber = -76590;
 
-        int placeHolder = 0;
+        if (picasso == null) {
+            Picasso.with(view.getContext()).load(imgURL).into(view);
+            return;
+        }
+
+        int placeHolder;
         if (key == PostsAdapter.thumbnailKey) {
             placeHolder = R.drawable.bf109;
 
@@ -101,11 +106,6 @@ public class Utils {
             placeHolder = R.drawable.no_avatar;
         } else {
             throw new IllegalArgumentException("image type undefined: " + Integer.toString(key));
-        }
-
-        if (picasso == null) {
-            Picasso.with(view.getContext()).load(imgURL).into(view);
-            return;
         }
 
         int height = sizes.get(key, anOrganicRandomNumber);
