@@ -34,6 +34,7 @@ public class PostsFragment extends Fragment {
     private int tag;
 
     private boolean refreshPending;
+    private Bundle savedState;
 
     public static PostsFragment newInstance(ViewPager vp, int index, String catalog, int period, int tag) {
         PostsFragment postsFragment = new PostsFragment();
@@ -54,7 +55,6 @@ public class PostsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             this.curPage = savedInstanceState.getInt("curPage");
             this.lastPage = savedInstanceState.getInt("lastPage");
@@ -65,7 +65,6 @@ public class PostsFragment extends Fragment {
             Utils.ListHelper posts_list = (Utils.ListHelper) posts_bundle.getSerializable("posts");
             this.posts = (ArrayList) posts_list.getList();
 
-            Log.v("posts frag", "restored");
             mPostsAdapter = new PostsAdapter((WTLApplication) getActivity().getApplication(), posts, tag);
         } else {
             posts = new ArrayList();
@@ -75,6 +74,7 @@ public class PostsFragment extends Fragment {
             this.refreshPending = true;
             mPostsAdapter = new PostsAdapter((WTLApplication) getActivity().getApplication(), posts, tag);
         }
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class PostsFragment extends Fragment {
             }
         });
 
-        request();
+        refresh();
         return rootView;
     }
 
@@ -143,13 +143,16 @@ public class PostsFragment extends Fragment {
             request();
         } else {
             this.refreshPending = true;
+            if (this.savedState != null) {
+                savedState.putBoolean("refreshPending", true);
+            }
         }
     }
 
     // refresh the content when necessary
     public void refresh() {
         if (refreshPending) {
-            setPeriod(getArguments().getInt("period", 0));
+            request();
             refreshPending = false;
         }
     }
@@ -159,11 +162,17 @@ public class PostsFragment extends Fragment {
         curPage = 0;
         lastPage = -1;
         load = 25;
+        if (this.savedState != null) {
+            savedState.putInt("curPage", curPage);
+            savedState.putInt("lastPage", -1);
+            savedState.putInt("load", 25);
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
+        this.savedState = savedInstanceState;
         savedInstanceState.putInt("curPage", curPage);
         savedInstanceState.putInt("lastPage", lastPage);
         savedInstanceState.putInt("load", load);
@@ -178,9 +187,6 @@ public class PostsFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         mPostsAdapter.stopAll();
-//        RefWatcher r = WTLApplication.getRefWatcher(getActivity());
-//        r.watch(this);
-//        r.watch(mPostsAdapter);
     }
 
 }

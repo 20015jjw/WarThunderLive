@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         mPostsPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                Log.v("main", Integer.toString(position));
                 mPostsPagerAdapter.refreshView(position);
             }
         });
