@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -40,46 +39,8 @@ public class RequestMaker extends AsyncTask<Bundle , Void, String> {
     }
 
     public InputStream makeRequest() throws IOException {
-
-        String type = args.getString("type");
-        Request request;
-        Response response;
-
-        if (type.equals("feed")) {
-
-            String content = String.valueOf(args.getInt("content"));
-            String page = String.valueOf(args.getInt("page"));
-            String period = String.valueOf(args.getInt("period"));
-
-            RequestBody postBody = new FormEncodingBuilder()
-                    .add("page", page)
-                    .add("content", content)
-                    .add("sort", "1")
-                    .add("user", "0")
-                    .add("period", period)
-                    .build();
-
-            request = new Request.Builder()
-                    .url(API.unLogged)
-                    .post(postBody)
-                    .build();
-
-        } else {
-
-            String id = String.valueOf(args.getInt("id"));
-
-            RequestBody postBody = new FormEncodingBuilder()
-            .add("lang_group", id)
-            .add("language", "en")
-            .build();
-
-            request = new Request.Builder()
-                    .url(API.postURL)
-                    .post(postBody)
-                    .build();
-        }
-
-        response = CLIENT.newCall(request).execute();
+        Request request = RequestHelper.getRequest(args);
+        Response response = CLIENT.newCall(request).execute();
         return response.body().byteStream();
     }
 

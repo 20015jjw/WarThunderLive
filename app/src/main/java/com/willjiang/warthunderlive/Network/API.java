@@ -3,9 +3,9 @@ package com.willjiang.warthunderlive.Network;
 public class API {
     // URLs
     public static final String baseURL = "http://live.warthunder.com/api";
-    public static final String unLogged = baseURL + "/feed/get_unlogged/";
-
-    public static final String postURL = baseURL + "/posts/get/";
+    public static final String unLoggedFeed = baseURL + "/feed/get_unlogged/";
+    public static final String subscribedFeed = baseURL + "/feed/get_subscribes_users/";
+    public static final String loginURL = "https://login.gaijin.net/en/sso/login/procedure/";
 
     // Request paths
     public static final String posts_page = "page";
