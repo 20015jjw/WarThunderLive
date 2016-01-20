@@ -111,4 +111,10 @@ public class PostsPagerAdapter extends FragmentStatePagerAdapter {
         ((PostsFragment) registeredFragments.get(position)).refresh();
     }
 
+    public void pauseAll() {
+        for (int i = 0, size = registeredFragments.size(); i < size; i++) {
+            ((PostsFragment) registeredFragments.valueAt(i)).onPause();
+        }
+    }
+
 }

@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
         // Restore state members from saved instance
+        Log.v("main", "restoring");
         mPostsPager.setCurrentItem(savedInstanceState.getInt("currentPage"));
     }
 
@@ -99,6 +100,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void onRefresh() {
         mPostsPagerAdapter.refresh();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.v("main", "paused");
+        mPostsPagerAdapter.pauseAll();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.v("main", "stopped");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.v("main", "destroyed");
     }
 
 }

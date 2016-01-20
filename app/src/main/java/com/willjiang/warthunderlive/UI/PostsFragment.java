@@ -184,6 +184,18 @@ public class PostsFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        mPostsAdapter.pauseAll();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPostsAdapter.resumeAll();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         mPostsAdapter.stopAll();
