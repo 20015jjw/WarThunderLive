@@ -12,4 +12,9 @@
         android:title="refresh"
         android:orderInCategory="50"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/login_activity"
+        android:title="L"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
 </menu>

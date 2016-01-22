@@ -1,5 +1,6 @@
 package com.willjiang.warthunderlive;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -75,9 +76,11 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.period_switch) {
             onSwitch(item);
-        }
-        else if (id == R.id.refresh) {
+        } else if (id == R.id.refresh) {
             onRefresh();
+        } else if (id == R.id.login_activity) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

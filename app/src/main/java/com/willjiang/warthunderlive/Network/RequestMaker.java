@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -14,15 +16,19 @@ import com.squareup.okhttp.Response;
 import com.willjiang.warthunderlive.Adapter.PostsAdapter;
 import com.willjiang.warthunderlive.R;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class RequestMaker extends AsyncTask<Bundle , Void, String> {
     private Context mContext;
     private View rootView;
-    private List response;
+    private List response_list;
+    private String response_raw;
     private Bundle args;
+    private String type;
 
 
     private OkHttpClient CLIENT = new OkHttpClient();
@@ -36,6 +42,7 @@ public class RequestMaker extends AsyncTask<Bundle , Void, String> {
         this.rootView = rootView;
         this.args = args;
         this.mContext = context;
+        type = args.getString("type");
     }
 
     public InputStream makeRequest() throws IOException {
@@ -47,8 +54,19 @@ public class RequestMaker extends AsyncTask<Bundle , Void, String> {
     @Override
     protected String doInBackground(Bundle... params) {
         try {
+
             JsonParser parser = new JsonParser(this.mContext);
-            response = parser.readJsonStream(makeRequest());
+            if (type.equals("feed")) {
+                response_list = parser.readJsonStream(makeRequest());
+            } else {
+                BufferedReader r = new BufferedReader(new InputStreamReader(makeRequest()));
+                StringBuilder t = new StringBuilder();
+                String line;
+                while ((line = r.readLine()) != null) {
+                    t.append(line);
+                }
+                response_raw = t.toString();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,11 +75,12 @@ public class RequestMaker extends AsyncTask<Bundle , Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        String type = args.getString("type");
         if (type.equals("feed")) {
             RecyclerView posts_list = (RecyclerView) rootView.findViewById(R.id.posts_list);
-            ((PostsAdapter) posts_list.getAdapter()).addAll(response);
+            ((PostsAdapter) posts_list.getAdapter()).addAll(response_list);
         } else {
+            WebView webView = (WebView) rootView.findViewById(R.id.login_webview);
+            webView.loadData(response_raw, "text/html", "UTF-8");
         }
     }
 
