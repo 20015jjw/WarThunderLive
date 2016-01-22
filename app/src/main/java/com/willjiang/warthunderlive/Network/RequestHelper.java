@@ -39,12 +39,13 @@ public class RequestHelper {
                 .add("page", page)
                 .add("content", content)
                 .add("sort", "1")
-                .add("user", "0")
+                .add("user", API.userID)
                 .add("period", period)
                 .build();
 
+
         Request request = new Request.Builder()
-                .url(API.unLoggedFeed)
+                .url(API.userID.equals("0") ? API.unLoggedFeed : API.subscribedUserFeed)
                 .post(postBody)
                 .build();
 

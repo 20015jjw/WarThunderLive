@@ -4,7 +4,8 @@ public class API {
     // URLs
     public static final String baseURL = "http://live.warthunder.com/api";
     public static final String unLoggedFeed = baseURL + "/feed/get_unlogged/";
-    public static final String subscribedFeed = baseURL + "/feed/get_subscribes_users/";
+    public static final String subscribedUserFeed = baseURL + "/feed/get_subscribes_users/";
+    public static final String subscribedTagFeed = baseURL + "/feed/get_subscribes_tags/";
     public static final String loginURL = "https://login.gaijin.net/en/sso/login/procedure/";
 
     // Request paths
@@ -13,6 +14,9 @@ public class API {
     public static final String posts_sort = "sort";
     public static final String posts_user = "user";
     public static final String posts_period = "period";
+
+    // Login info
+    public static String userID = "0";
 
     // Json tags
     public static final String id = "id";

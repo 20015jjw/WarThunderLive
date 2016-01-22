@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Bundle args = new Bundle();
                 args.putString("type", "login");
+                // the account below is created by myself, and not used for anything but testing
                 args.putString("username", "byzanz@gmail.com");
                 args.putString("password", "byzanz");
                 new RequestMaker(context, rootView, args).execute(args);
