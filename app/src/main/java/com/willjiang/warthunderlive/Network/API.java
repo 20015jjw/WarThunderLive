@@ -16,6 +16,7 @@ public class API {
     public static final String posts_period = "period";
 
     // Login info
+    public static String userIDKey = "userID";
     public static String userID = "0";
 
     // Json tags

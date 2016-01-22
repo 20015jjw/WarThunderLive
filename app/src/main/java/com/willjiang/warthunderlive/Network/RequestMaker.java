@@ -15,6 +15,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import com.willjiang.warthunderlive.Adapter.PostsAdapter;
+import com.willjiang.warthunderlive.LoginActivity;
 import com.willjiang.warthunderlive.R;
 import com.willjiang.warthunderlive.WTLApplication;
 
@@ -93,7 +94,7 @@ public class RequestMaker extends AsyncTask<Bundle , Void, String> {
             ((PostsAdapter) posts_list.getAdapter()).addAll(response_list);
         } else {
             try {
-                API.userID = getUserID(response_raw);
+                ((LoginActivity) mContext).setUserID(getUserID(response_raw));
             } catch (IOException e) {
                 Log.e("RequestMaker", "Unable to log in");
             }
