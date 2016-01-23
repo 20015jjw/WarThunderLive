@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     public void setUserID(String userID) {
         SharedPreferences prefs = this.getSharedPreferences(
                 this.getPackageName(), Context.MODE_PRIVATE);
-        prefs.edit().putString(API.userIDKey, userID).commit();
+        prefs.edit().putString(API.userIDKey, userID).apply();
         API.userID = userID;
     }
 
