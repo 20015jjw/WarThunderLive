@@ -62,7 +62,7 @@ public class RequestHelper {
                 .add("action", "")
                 .add("service", "")
                 .add("zendesk_locale_id", "")
-                .add("referere", "")
+                .add("referer", "")
                 .add("refresh_token", "1")
                 .build();
 

@@ -14,6 +14,8 @@ public class WTLApplication extends Application{
 
     private Picasso mPicasso;
     private OkHttpClient mClient;
+    private CookieManager mCookieManager;
+    private PersistentCookieStore mCookieStore;
 
     public Picasso getPicasso() {
         return mPicasso;
@@ -35,9 +37,13 @@ public class WTLApplication extends Application{
         Picasso.setSingletonInstance(mPicasso);
 
         mClient = new OkHttpClient();
-        mClient.setCookieHandler(new CookieManager(
-                new PersistentCookieStore(getApplicationContext()),
-                CookiePolicy.ACCEPT_ALL));
+        mCookieStore = new PersistentCookieStore(getApplicationContext());
+        mCookieManager = new CookieManager(mCookieStore, CookiePolicy.ACCEPT_ALL);
+        mClient.setCookieHandler(mCookieManager);
+    }
+
+    public void clearCookie() {
+        mCookieStore.removeAll();
     }
 
     @Override
@@ -49,5 +55,4 @@ public class WTLApplication extends Application{
     public void onTerminate() {
         super.onTerminate();
     }
-
 }

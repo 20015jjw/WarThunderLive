@@ -7,12 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 
-import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import com.willjiang.warthunderlive.Adapter.PostsAdapter;
 import com.willjiang.warthunderlive.LoginActivity;
@@ -23,10 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.CookieManager;
-import java.net.CookiePolicy;
 import java.util.List;
-import java.util.MissingResourceException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -95,10 +89,10 @@ public class RequestMaker extends AsyncTask<Bundle , Void, String> {
         } else {
             try {
                 ((LoginActivity) mContext).setUserID(getUserID(response_raw));
+                ((LoginActivity) mContext).successAndBack();
             } catch (IOException e) {
-                Log.e("RequestMaker", "Unable to log in");
+                ((LoginActivity) mContext).fail();
             }
-            Log.v("userID", API.userID);
         }
     }
 

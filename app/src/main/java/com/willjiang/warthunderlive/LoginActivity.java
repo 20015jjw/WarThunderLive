@@ -6,20 +6,17 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
-import com.squareup.okhttp.Request;
 import com.willjiang.warthunderlive.Network.API;
-import com.willjiang.warthunderlive.Network.RequestHelper;
 import com.willjiang.warthunderlive.Network.RequestMaker;
 
 /**
@@ -44,6 +41,13 @@ public class LoginActivity extends AppCompatActivity {
                 this.getPackageName(), Context.MODE_PRIVATE);
         prefs.edit().putString(API.userIDKey, userID).apply();
         API.userID = userID;
+    }
+
+    public void clearUserID() {
+        SharedPreferences prefs = this.getSharedPreferences(
+                this.getPackageName(), Context.MODE_PRIVATE);
+        prefs.edit().remove(API.userIDKey).apply();
+        API.userID = "0";
     }
 
     @Deprecated
@@ -83,11 +87,16 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void setupLoginButton(final Context requestContext) {
+    private void setupLoginButton(final Context requestContext) {
         final Button loginButton = (Button) findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!API.userID.equals("0")) {
+                    Log.v("log", "logout");
+                    logout();
+                    return;
+                }
                 EditText username = (EditText) findViewById(R.id.login_username);
                 EditText password = (EditText) findViewById(R.id.login_password);
                 username.clearFocus();
@@ -97,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                 loginButton.requestFocus();
 
                 if (username.getError() == null && password.getError() == null) {
+                    hideKeyboard();
                     final View rootView = findViewById(R.id.login);
                     Bundle args = new Bundle();
                     args.putString("type", "login");
@@ -108,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void setupKeyboard(final View view) {
+    private void setupKeyboard(final View view) {
         // script taken from:
         // http://stackoverflow.com/questions/4745988/
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -132,5 +142,30 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void hideKeyboard() {
+        // script taken from:
+        // http://stackoverflow.com/questions/1109022/
+        View view = getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public void logout() {
+        clearUserID();
+        ((WTLApplication) getApplicationContext()).clearCookie();
+    }
+
+    public void successAndBack() {
+        Toast.makeText(this, "Login successful!", Toast.LENGTH_LONG).show();
+        finish();
+    }
+
+    public void fail() {
+        Toast.makeText(this, "Fail to login!", Toast.LENGTH_LONG).show();
+        ((WTLApplication) getApplicationContext()).clearCookie();
     }
 }
