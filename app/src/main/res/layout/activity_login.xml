@@ -15,54 +15,66 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
-            />
+            android:background="?attr/colorPrimary" >
+
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
+    <ScrollView
+        android:id="@+id/login_scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin" >
+        android:layout_height="match_parent">
 
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bf109"
-            android:id="@+id/imageView"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="64dp" />
-
-        <EditText
-            android:id="@+id/login_username"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:hint="Email"
-            android:layout_below="@+id/imageView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin" >
 
-        <EditText
-            android:id="@+id/login_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:password="true"
-            android:hint="Password"
-            android:singleLine="true"
-            android:layout_below="@+id/login_username" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bf109"
+                android:id="@+id/login_logo"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="64dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/login_button"
-            android:text="Login"
-            android:layout_below="@+id/login_password"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/login_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                app:met_floatingLabel="highlight"
+                android:layout_below="@+id/login_logo"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/login_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Password"
+                android:singleLine="true"
+                app:met_floatingLabel="highlight"
+                android:layout_below="@+id/login_username" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/login_button"
+                android:text="Login"
+                android:layout_below="@+id/login_password"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

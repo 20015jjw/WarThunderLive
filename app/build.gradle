@@ -42,5 +42,7 @@ dependencies {
     compile 'com.daimajia.slider:library:1.1.5@aar'
     compile 'com.makeramen:roundedimageview:2.2.1'
     compile 'com.commit451:PhotoView:1.2.4'
+
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
 }
 
