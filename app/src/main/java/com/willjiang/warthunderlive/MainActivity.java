@@ -12,12 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.willjiang.warthunderlive.Adapter.PostsPagerAdapter;
 import com.willjiang.warthunderlive.Network.API;
 
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private final String mCurrentPageKey = "currentPage";
     private final String mCurrentPeriodKey = "currentPeriod";
+
+    Drawer drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,23 +59,32 @@ public class MainActivity extends AppCompatActivity {
         TabLayout PostsHeader = (TabLayout) findViewById(R.id.posts_pager_header);
         PostsHeader.setupWithViewPager(mPostsPager);
 
-        Drawer drawer = setupDrawer(toolbar);
-
+        drawer = setupDrawer(toolbar);
     }
 
     private Drawer setupDrawer(Toolbar toolbar) {
         AccountHeader header = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withHeaderBackground(R.drawable.bf109)
+                .withHeaderBackground(R.drawable.profile_image)
+                .withHeaderBackgroundScaleType(ImageView.ScaleType.CENTER_CROP)
+                .addProfiles(
+                        new ProfileDrawerItem()
+                                .withName("__StrafeMike__")
+                                .withIcon("http://cdn-live.warthunder.com/uploads/49/55a47dbf18e99222ecbcf60aae8da2b9b9e3e3/avatar.png")
+                )
                 .build();
-        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withName("test");
+        PrimaryDrawerItem feed = new PrimaryDrawerItem()
+                .withName(getString(R.string.drawer_feed));
+        SecondaryDrawerItem notification = new SecondaryDrawerItem()
+                .withName(getString(R.string.drawer_notification));
         Drawer drawer = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withActionBarDrawerToggle(true)
                 .withActionBarDrawerToggleAnimated(true)
                 .withAccountHeader(header)
-                .addDrawerItems(item1)
+                .addDrawerItems(feed)
+                .addDrawerItems(notification)
                 .build();
         return drawer;
     }
@@ -85,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState = drawer.saveInstanceState(savedInstanceState);
         savedInstanceState.putInt(mCurrentPageKey, mPostsPager.getCurrentItem());
         savedInstanceState.putInt(mCurrentPeriodKey, mPostsPagerAdapter.getPeriod());
         super.onSaveInstanceState(savedInstanceState);
@@ -103,17 +118,23 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.period_switch) {
-            onSwitch(item);
-        } else if (id == R.id.refresh) {
-            onRefresh();
-        } else if (id == R.id.login_activity) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.period_switch:
+                onSwitch(item);
+                return true;
+            case R.id.refresh:
+                onRefresh();
+                return true;
+            case R.id.login_activity:
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void onSwitch(MenuItem item) {
@@ -127,6 +148,15 @@ public class MainActivity extends AppCompatActivity {
         }
         mPostsPagerAdapter.setPeriod(curPeriod);
         updatePeriodIcon(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer != null && drawer.isDrawerOpen()) {
+            drawer.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void updatePeriodIcon(MenuItem periodItem) {

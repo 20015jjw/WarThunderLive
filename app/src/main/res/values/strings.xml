@@ -6,4 +6,8 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_post_detail">PostDetailActivity</string>
 
+    <string name="drawer_feed">Feed</string>
+    <string name="drawer_notification">Notification</string>
+    <string name="drawer_setting">Settings</string>
+
 </resources>
