@@ -44,5 +44,8 @@ dependencies {
     compile 'com.commit451:PhotoView:1.2.4'
 
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile('com.mikepenz:materialdrawer:4.6.4@aar') {
+        transitive = true
+    }
 }
 

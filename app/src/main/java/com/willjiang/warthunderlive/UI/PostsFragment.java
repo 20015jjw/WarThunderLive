@@ -139,7 +139,8 @@ public class PostsFragment extends Fragment {
         Bundle args = this.getArguments();
         args.putInt("period", period);
         clearPosts();
-        if (this.vp.getCurrentItem() == this.getArguments().getInt("index", 100)) {
+        if (this.vp == null ||
+                this.vp.getCurrentItem() == this.getArguments().getInt("index", 100)) {
             request();
         } else {
             this.refreshPending = true;

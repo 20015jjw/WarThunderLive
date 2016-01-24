@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mPostsPager;
     private PostsPagerAdapter mPostsPagerAdapter;
 
+    private final String mCurrentPageKey = "currentPage";
+    private final String mCurrentPeriodKey = "currentPeriod";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,25 +51,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
-        // Always call the superclass so it can restore the view hierarchy
         super.onRestoreInstanceState(savedInstanceState);
+        mPostsPager.setCurrentItem(savedInstanceState.getInt(mCurrentPageKey));
+        mPostsPagerAdapter.setPeriod(savedInstanceState.getInt(mCurrentPeriodKey));
 
-        // Restore state members from saved instance
-        Log.v("main", "restoring");
-        mPostsPager.setCurrentItem(savedInstanceState.getInt("currentPage"));
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        /* only called when a fragment for that position does not exist */
-        savedInstanceState.putInt("currentPage", mPostsPager.getCurrentItem());
+        savedInstanceState.putInt(mCurrentPageKey, mPostsPager.getCurrentItem());
+        savedInstanceState.putInt(mCurrentPeriodKey, mPostsPagerAdapter.getPeriod());
         super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        updatePeriodIcon(menu.findItem(R.id.period_switch));
         return true;
     }
 
@@ -76,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.period_switch) {
             onSwitch(item);
@@ -94,15 +94,22 @@ public class MainActivity extends AppCompatActivity {
         int curPeriod = mPostsPagerAdapter.getPeriod();
         if (curPeriod == 7) {
             curPeriod = 30;
-            item.setTitle(Integer.toString(curPeriod));
         } else if (curPeriod == 30) {
             curPeriod = 0;
-            item.setTitle("∞");
         } else if (curPeriod == 0) {
             curPeriod = 7;
-            item.setTitle(Integer.toString(curPeriod));
         }
         mPostsPagerAdapter.setPeriod(curPeriod);
+        updatePeriodIcon(item);
+    }
+
+    private void updatePeriodIcon(MenuItem periodItem) {
+        int curPeriod = mPostsPagerAdapter.getPeriod();
+        if (curPeriod == 7 || curPeriod == 30) {
+            periodItem.setTitle(Integer.toString(curPeriod));
+        } else {
+            periodItem.setTitle("∞");
+        }
     }
 
     private void onRefresh() {

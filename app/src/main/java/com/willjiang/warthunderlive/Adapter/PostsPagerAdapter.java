@@ -108,7 +108,8 @@ public class PostsPagerAdapter extends FragmentStatePagerAdapter {
 
     // refresh only one view when the content should change
     public void refreshView(int position) {
-        ((PostsFragment) registeredFragments.get(position)).refresh();
+        PostsFragment postsFragment = (PostsFragment) registeredFragments.get(position);
+        if (postsFragment != null) postsFragment.refresh();
     }
 
     public void pauseAll() {
