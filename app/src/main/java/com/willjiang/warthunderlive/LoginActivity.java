@@ -32,7 +32,11 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        setupTextFields();
+        if (savedInstanceState != null) {
+            setupTextFields(savedInstanceState);
+        } else {
+            setupTextFields();
+        }
         setupLoginButton(this);
     }
 
@@ -50,9 +54,20 @@ public class LoginActivity extends AppCompatActivity {
         API.userID = "0";
     }
 
-    @Deprecated
-    public void restoreUserID() {
-        ((MainActivity) getParent()).restoreUserID();
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        final EditText username = (EditText) findViewById(R.id.login_username);
+        final EditText password = (EditText) findViewById(R.id.login_password);
+        savedInstanceState.putString(API.username, username.getText().toString());
+        savedInstanceState.putString(API.password, password.getText().toString());
+    }
+
+    private void setupTextFields(Bundle savedInstanceState) {
+        final EditText username = (EditText) findViewById(R.id.login_username);
+        final EditText password = (EditText) findViewById(R.id.login_password);
+        username.setText(savedInstanceState.getString(API.username));
+        password.setText(savedInstanceState.getString(API.password));
+        setupTextFields();
     }
 
     private void setupTextFields() {

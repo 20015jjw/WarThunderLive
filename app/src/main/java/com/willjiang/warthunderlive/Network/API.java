@@ -18,6 +18,8 @@ public class API {
     // Login info
     public static String userIDKey = "userID";
     public static String userID = "0";
+    public static String username = "username";
+    public static String password = "password";
 
     // Json tags
     public static final String id = "id";
