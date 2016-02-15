@@ -28,6 +28,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if (API.isLogin()) {
+            logout();
+            finish();
+        }
+
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -45,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 this.getPackageName(), Context.MODE_PRIVATE);
         prefs.edit().putString(API.userIDKey, userID).apply();
         API.userID = userID;
+
     }
 
     public void clearUserID() {
@@ -107,11 +113,6 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!API.userID.equals("0")) {
-                    Log.v("log", "logout");
-                    logout();
-                    return;
-                }
                 EditText username = (EditText) findViewById(R.id.login_username);
                 EditText password = (EditText) findViewById(R.id.login_password);
                 username.clearFocus();
@@ -171,11 +172,16 @@ public class LoginActivity extends AppCompatActivity {
 
     public void logout() {
         clearUserID();
+        Toast.makeText(this, "Logged out", Toast.LENGTH_LONG).show();
+        MainActivity.activity.onRefresh();
+        MainActivity.activity.invalidateOptionsMenu();
         ((WTLApplication) getApplicationContext()).clearCookie();
     }
 
     public void successAndBack() {
         Toast.makeText(this, "Login successful!", Toast.LENGTH_LONG).show();
+        MainActivity.activity.onRefresh();
+        MainActivity.activity.invalidateOptionsMenu();
         finish();
     }
 

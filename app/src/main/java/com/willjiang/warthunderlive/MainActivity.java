@@ -26,6 +26,7 @@ import com.willjiang.warthunderlive.Network.API;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static MainActivity activity;
     private ViewPager mPostsPager;
     private PostsPagerAdapter mPostsPagerAdapter;
 
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = this;
 
         restoreUserID();
         setContentView(R.layout.activity_main);
@@ -67,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.profile_image)
                 .withHeaderBackgroundScaleType(ImageView.ScaleType.CENTER_CROP)
-                .addProfiles(
-                        new ProfileDrawerItem()
-                                .withName("__StrafeMike__")
-                                .withIcon("http://cdn-live.warthunder.com/uploads/49/55a47dbf18e99222ecbcf60aae8da2b9b9e3e3/avatar.png")
-                )
+//                .addProfiles(
+//                        new ProfileDrawerItem()
+//                                .withName("__StrafeMike__")
+//                                .withIcon("http://cdn-live.warthunder.com/uploads/49/55a47dbf18e99222ecbcf60aae8da2b9b9e3e3/avatar.png")
+//                )
                 .build();
         PrimaryDrawerItem feed = new PrimaryDrawerItem()
                 .withName(getString(R.string.drawer_feed));
@@ -109,6 +111,19 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         updatePeriodIcon(menu.findItem(R.id.period_switch));
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem login = menu.findItem(R.id.login_activity);
+        if (API.isLogin()) {
+            login.setTitle("Logout");
+            login.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        } else {
+            login.setTitle("L");
+            login.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        }
         return true;
     }
 
@@ -168,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void onRefresh() {
+    public void onRefresh() {
         mPostsPagerAdapter.refresh();
     }
 

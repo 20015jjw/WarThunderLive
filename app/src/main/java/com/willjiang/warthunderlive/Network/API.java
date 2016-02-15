@@ -44,4 +44,8 @@ public class API {
     public static final String video_info = "video_info";
     public static final String video_type = "image";
     public static final String video_image_src = "image";
+
+    public static boolean isLogin() {
+        return !userID.equals("0");
+    }
 }

@@ -14,7 +14,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/login_activity"
-        android:title="L"
+        android:title="Login"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
 </menu>
